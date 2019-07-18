@@ -49,7 +49,6 @@ import java.util.Locale;
 
 /**
  * Autonomous Mode for when facing the Depot.
- * By Trevor Yates
  * Cybernoles
  */
 

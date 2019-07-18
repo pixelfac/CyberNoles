@@ -48,8 +48,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 /**
- * Autonomous Mode for when facing the Depot.
- * By Trevor Yates
+ * Autonomous Mode for when facing the Crater.
  * Cybernoles
  */
 
