@@ -84,7 +84,7 @@ public class AutonomousCrater extends LinearOpMode {
         rightDriveBack.setPower(0);
     }
 
-    public void forward(int t)
+    public void forward(int time)
     {
         leftDriveFront.setPower(1);
         leftDriveFront.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -94,14 +94,14 @@ public class AutonomousCrater extends LinearOpMode {
         rightDriveFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightDriveBack.setPower(1);
         rightDriveBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        sleep(t);
+        sleep(time);
         leftDriveFront.setPower(0);
         leftDriveBack.setPower(0);
         rightDriveFront.setPower(0);
         rightDriveBack.setPower(0);
     }
 
-    public void reverse(int t)
+    public void reverse(int time)
     {
         leftDriveFront.setPower(1);
         leftDriveFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -111,7 +111,7 @@ public class AutonomousCrater extends LinearOpMode {
         rightDriveFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightDriveBack.setPower(1);
         rightDriveBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        sleep(t);
+        sleep(time);
         leftDriveFront.setPower(0);
         leftDriveBack.setPower(0);
         rightDriveFront.setPower(0);
