@@ -25,7 +25,7 @@ public class AutonomousBlueLoadingZone extends LinearOpMode {
     private DcMotor rightDriveFront = null;
     private DcMotor rightDriveBack = null;
     private Servo grabber = null;
-    private Servo scislift = null; //could be Servo or CRServo
+    private DcMotor scislift = null;
 
 
      //put custom methods here
@@ -119,10 +119,9 @@ public class AutonomousBlueLoadingZone extends LinearOpMode {
         rightDriveFront = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         rightDriveBack = hardwareMap.get(DcMotor.class, "rightBackDrive");
         //grabber = hardwareMap.get(Servo.class, "grabber");
-        //scislift = hardwareMap.get(Servo.class, "scissor_lift")
+        scislift = hardwareMap.get(DcMotor.class, "scissor_lift");
 
 
-        AutoTransitioner.transitionOnStop(this, "TeleOpS2");
         waitForStart();
 
         /*
@@ -132,12 +131,15 @@ public class AutonomousBlueLoadingZone extends LinearOpMode {
         leftDriveFront.setPower(1);
         sleep(1000);
         leftDriveFront.setPower(0);
+
         leftDriveBack.setPower(1);
         sleep(1000);
         leftDriveBack.setPower(0);
+
         rightDriveFront.setPower(-1);
         sleep(1000);
         rightDriveFront.setPower(0);
+        
         rightDriveBack.setPower(-1);
         sleep(1000);
         rightDriveBack.setPower(0);
