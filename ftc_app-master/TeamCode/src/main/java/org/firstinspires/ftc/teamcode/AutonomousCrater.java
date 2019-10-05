@@ -48,7 +48,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 /**
- * Autonomous Mode for when facing the Crater.
+ * Autonomous Mode for when facing the Depot.
+ * By Trevor Yates
  * Cybernoles
  */
 
@@ -83,7 +84,7 @@ public class AutonomousCrater extends LinearOpMode {
         rightDriveBack.setPower(0);
     }
 
-    public void forward(int time)
+    public void forward(int t)
     {
         leftDriveFront.setPower(1);
         leftDriveFront.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -93,14 +94,14 @@ public class AutonomousCrater extends LinearOpMode {
         rightDriveFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightDriveBack.setPower(1);
         rightDriveBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        sleep(time);
+        sleep(t);
         leftDriveFront.setPower(0);
         leftDriveBack.setPower(0);
         rightDriveFront.setPower(0);
         rightDriveBack.setPower(0);
     }
 
-    public void reverse(int time)
+    public void reverse(int t)
     {
         leftDriveFront.setPower(1);
         leftDriveFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -110,7 +111,7 @@ public class AutonomousCrater extends LinearOpMode {
         rightDriveFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightDriveBack.setPower(1);
         rightDriveBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        sleep(time);
+        sleep(t);
         leftDriveFront.setPower(0);
         leftDriveBack.setPower(0);
         rightDriveFront.setPower(0);
