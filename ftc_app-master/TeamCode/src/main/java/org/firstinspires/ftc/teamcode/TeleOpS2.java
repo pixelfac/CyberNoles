@@ -59,6 +59,9 @@ public class TeleOpS2 extends LinearOpMode {
 	//when the scissorlift motor is set to zero, it will resist rotating
         //so as to hold the lift in an elevated position
         scislift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+	int[] liftlvls= [0, 10, 30, 60, 90];
+  	int count = 0;
+
 
         /* Doesn't start input events until program intializes */
         waitForStart();
@@ -153,13 +156,32 @@ public class TeleOpS2 extends LinearOpMode {
             motorBackRight.setPower(BRpower);
 
 	    //scissorlift Movement
-            //DPAD up and down to raise and lower the lift
-            if (gamepad2.dpad_up)
-                scislift.setPower(0.5);
-            else if (gamepad2.dpad_down)
-                scislift.setPower(-0.5);
-            else
-                scislift.setPower(0);
+            //have different levels of elevation depending on how many blocks are already stacked
+	    //use left and right bumper to iterate between levels
+
+
+
+            if (gamepad2.right_bumper) {
+		while (!(scisliftLeft.isBusy() || scisliftRight.isBusy()))
+		{
+			if (count < 4)
+				count++;
+			scisliftLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+			scisliftRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+
+			//MAXIMUM tick is 156, do not exceed!
+			scisliftLeft.setTargetPosition(liftlvls[count]);
+			scisliftRight.setTargetPosition(liftlvls[count]);
+
+			scisliftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+			scisliftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+			//Left is negative power
+			scisliftLeft.setPower(-0.3);
+			scisliftRight.setPower(0.3);
+		}
+	    }
+
 
             //grabber movement
             if (gamepad2.right_stick_y > 0.2)
