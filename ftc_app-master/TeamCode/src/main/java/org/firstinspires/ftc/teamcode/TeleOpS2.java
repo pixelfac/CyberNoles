@@ -106,7 +106,6 @@ public class TeleOpS2 extends LinearOpMode {
                 /* This checks where the joystick is in an x and
                  * y location. This is used to assign values for
                  * the direction placeholders.*/
-                moving = true;
                 if (leftStickX > 0) {
                     dir1 = 3;
                 } else if (leftStickX < 0) {
