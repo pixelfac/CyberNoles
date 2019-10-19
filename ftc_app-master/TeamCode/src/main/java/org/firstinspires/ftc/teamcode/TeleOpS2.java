@@ -162,27 +162,46 @@ public class TeleOpS2 extends LinearOpMode {
 
 
             if (gamepad2.right_bumper) {
-		while (!(scisliftLeft.isBusy() || scisliftRight.isBusy()))
-		{
-			if (count < 4)
-				count++;
-			scisliftLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
-			scisliftRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+		if (count < 4) {
+			count++;
+			if (!(scisliftLeft.isBusy() || scisliftRight.isBusy())) {
+		scisliftLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+		scisliftRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
-			//MAXIMUM tick is 156, do not exceed!
-			scisliftLeft.setTargetPosition(liftlvls[count]);
-			scisliftRight.setTargetPosition(liftlvls[count]);
+		//MAXIMUM tick is 156, do not exceed!
+		scisliftLeft.setTargetPosition(liftlvls[count]);
+		scisliftRight.setTargetPosition(liftlvls[count]);
 
-			scisliftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-			scisliftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+		scisliftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+		scisliftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-			//Left is negative power
-			scisliftLeft.setPower(-0.3);
-			scisliftRight.setPower(0.3);
+		//Left is negative power
+		scisliftLeft.setPower(-0.3);
+		scisliftRight.setPower(0.3);
+	    }
 		}
 	    }
 
+	    if (gamepad2.left_bumper) {
+		if (count > 0) {
+			count--;
+	    		if (!(scisliftLeft.isBusy() || scisliftRight.isBusy())) {
+		scisliftLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+		scisliftRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
+		//MAXIMUM tick is 156, do not exceed!
+		scisliftLeft.setTargetPosition(liftlvls[count]);
+		scisliftRight.setTargetPosition(liftlvls[count]);
+
+		scisliftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+		scisliftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+		//Left is negative power
+		scisliftLeft.setPower(0.3);
+		scisliftRight.setPower(-0.3);
+	    }
+		}
+	    }
             //grabber movement
             if (gamepad2.right_stick_y > 0.2)
                 grabber.setPower(0.3);
