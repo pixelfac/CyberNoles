@@ -28,8 +28,6 @@ public class TeleOpS2 extends LinearOpMode {
     private DcMotor wheelBoiRight;
     private DcMotor rotateBoiLeft;
     private DcMotor rotateBoiRight;
-    private DcMotor scislift;
-    private CRServo grabber;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -44,9 +42,6 @@ public class TeleOpS2 extends LinearOpMode {
         wheelBoiRight = hardwareMap.get(DcMotor.class, "wheelBoiRight");
         rotateBoiLeft = hardwareMap.get(DcMotor.class, "rotateBoiLeft");
         rotateBoiRight = hardwareMap.get(DcMotor.class, "rotateBoiRight");
-
- 	scislift = hardwareMap.get(DcMotor.class, "scislift");
-        grabber = hardwareMap.get(CRServo.class, "grabber");
 
         /* This sets the maximum power of the motors to half of their
          * actual maximum power, so our robot doesn't go supa fast. */
