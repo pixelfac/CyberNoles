@@ -24,6 +24,10 @@ public class TeleOpS2 extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
+    private DcMotor wheelBoiLeft;
+    private DcMotor wheelBoiRight;
+    private DcMotor rotateBoiLeft;
+    private DcMotor rotateBoiRight;
     private DcMotor scislift;
     private CRServo grabber;
 
@@ -36,6 +40,10 @@ public class TeleOpS2 extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        wheelBoiLeft = hardwareMap.get(DcMotor.class, "wheelBoiLeft");
+        wheelBoiRight = hardwareMap.get(DcMotor.class, "wheelBoiRight");
+        rotateBoiLeft = hardwareMap.get(DcMotor.class, "rotateBoiLeft");
+        rotateBoiRight = hardwareMap.get(DcMotor.class, "rotateBoiRight");
 
  	scislift = hardwareMap.get(DcMotor.class, "scislift");
         grabber = hardwareMap.get(CRServo.class, "grabber");
@@ -159,60 +167,19 @@ public class TeleOpS2 extends LinearOpMode {
             //have different levels of elevation depending on how many blocks are already stacked
 	    //use left and right bumper to iterate between levels
 
-
-
-            if (gamepad2.right_bumper) {
-		if (count < 4) {
-			count++;
-			if (!(scisliftLeft.isBusy() || scisliftRight.isBusy())) {
-		scisliftLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
-		scisliftRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-
-		//MAXIMUM tick is 156, do not exceed!
-		scisliftLeft.setTargetPosition(liftlvls[count]);
-		scisliftRight.setTargetPosition(liftlvls[count]);
-
-		scisliftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-		scisliftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-		//Left is negative power
-		scisliftLeft.setPower(-0.3);
-		scisliftRight.setPower(0.3);
-	    }
-		}
-	    }
-
-	    if (gamepad2.left_bumper) {
-		if (count > 0) {
-			count--;
-	    		if (!(scisliftLeft.isBusy() || scisliftRight.isBusy())) {
-		scisliftLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
-		scisliftRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-
-		//MAXIMUM tick is 156, do not exceed!
-		scisliftLeft.setTargetPosition(liftlvls[count]);
-		scisliftRight.setTargetPosition(liftlvls[count]);
-
-		scisliftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-		scisliftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-		//Left is negative power
-		scisliftLeft.setPower(0.3);
-		scisliftRight.setPower(-0.3);
-	    }
-		}
-	    }
-            //grabber movement
-            if (gamepad2.right_stick_y > 0.2)
-                grabber.setPower(0.3);
-            else if (gamepad2.right_stick_y < -0.2)
-                grabber.setPower(-0.3);
-            else
-                grabber.setPower(0);
-
-            /* Prevents the controller from being dead inside */
-            idle();
+        if (gamepad2.a) {
+            wheelBoiLeft.setPower(1);
+            wheelBoiRight.setPower(-1);
         }
+        if (gamepad2.left_bumper) {
+            rotateBoiLeft.setPower(0.5);
+            rotateBoiRight.setPower(-0.5);
+        } else if (gamepad2.left_bumper) {
+            rotateBoiLeft.setPower(-0.5);
+            rotateBoiRight.setPower(0.5);
+        }
+        /* Prevents the controller from being dead inside */
+        idle();
     }
 }
 
