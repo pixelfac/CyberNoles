@@ -50,8 +50,8 @@ public class dualflytet extends LinearOpMode {
         rightArm.setDirection(DcMotor.Direction.REVERSE);
 
 
-        //leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         wheelBoiLeft.setPower(0);
         wheelBoiRight.setPower(0);
@@ -96,21 +96,7 @@ public class dualflytet extends LinearOpMode {
 
                 leftArm.setPower(0.45);
                 rightArm.setPower(0.45);
-
-                /*while(leftArm.isBusy() && rightArm.isBusy()) {
-
-                }
-
-                leftArm.setPower(0);
-                rightArm.setPower(0);
-
-                leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                */
-
-
-            }
-            if (gamepad1.dpad_down) {
+            } else if (gamepad1.dpad_down) {
                 //pos -= 20;
 
                 //leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -121,19 +107,9 @@ public class dualflytet extends LinearOpMode {
 
                 leftArm.setPower(-0.45);
                 rightArm.setPower(-0.45);
-
-                /*while(leftArm.isBusy() && rightArm.isBusy()) {
-
-                }
-
+            } else {
                 leftArm.setPower(0);
                 rightArm.setPower(0);
-
-                leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                */
-
-
             }
 
             if (gamepad1.left_bumper) {
