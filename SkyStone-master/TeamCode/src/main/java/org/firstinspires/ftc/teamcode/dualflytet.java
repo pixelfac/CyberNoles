@@ -49,8 +49,9 @@ public class dualflytet extends LinearOpMode {
 
         rightArm.setDirection(DcMotor.Direction.REVERSE);
 
-        leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         wheelBoiLeft.setPower(0);
         wheelBoiRight.setPower(0);
@@ -58,7 +59,7 @@ public class dualflytet extends LinearOpMode {
         rotateBoiRight.setPower(0);
         leftArm.setPower(0);
         rightArm.setPower(0);
-        dragger.setPosition(0.70);
+        dragger.setPosition(0.55);
         locker.setPosition(0);
         extendArm.setPower(0);
         telemetry.addData(">", "" + dragger.getPosition());
@@ -85,18 +86,18 @@ public class dualflytet extends LinearOpMode {
                 wheelBoiRight.setPower(1);
             }
             if (gamepad1.dpad_up) {
-                pos += 20;
+                //pos += 20;
 
-                leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //rightArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-                leftArm.setTargetPosition(leftArm.getCurrentPosition() + pos);
-                rightArm.setTargetPosition(rightArm.getCurrentPosition() + pos);
+                //leftArm.setTargetPosition(leftArm.getCurrentPosition() + pos);
+                //rightArm.setTargetPosition(rightArm.getCurrentPosition() + pos);
 
                 leftArm.setPower(0.45);
                 rightArm.setPower(0.45);
 
-                while(leftArm.isBusy() && rightArm.isBusy()) {
+                /*while(leftArm.isBusy() && rightArm.isBusy()) {
 
                 }
 
@@ -105,21 +106,23 @@ public class dualflytet extends LinearOpMode {
 
                 leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                */
+
 
             }
             if (gamepad1.dpad_down) {
-                pos -= 20;
+                //pos -= 20;
 
-                leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //rightArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-                leftArm.setTargetPosition(leftArm.getCurrentPosition() + pos);
-                rightArm.setTargetPosition(rightArm.getCurrentPosition() + pos);
+                //leftArm.setTargetPosition(leftArm.getCurrentPosition() + pos);
+                //rightArm.setTargetPosition(rightArm.getCurrentPosition() + pos);
 
-                leftArm.setPower(0.45);
-                rightArm.setPower(0.45);
+                leftArm.setPower(-0.45);
+                rightArm.setPower(-0.45);
 
-                while(leftArm.isBusy() && rightArm.isBusy()) {
+                /*while(leftArm.isBusy() && rightArm.isBusy()) {
 
                 }
 
@@ -128,15 +131,17 @@ public class dualflytet extends LinearOpMode {
 
                 leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                */
+
 
             }
 
             if (gamepad1.left_bumper) {
-                rotateBoiLeft.setPower(-1);
+                rotateBoiLeft.setPower(1);
                 rotateBoiRight.setPower(-1);
             }
             if (gamepad1.right_bumper) {
-                rotateBoiLeft.setPower(1);
+                rotateBoiLeft.setPower(-1);
                 rotateBoiRight.setPower(1);
             }
             if(gamepad2.a){
