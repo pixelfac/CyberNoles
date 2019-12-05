@@ -34,10 +34,10 @@ public class TeleOpS2 extends LinearOpMode {
 
         /* Here we tell the program what the motors actually are
          * in the real world, so that the program can manipulate them. */
-        //motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        //motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
-        //motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
-        //motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
+        motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
         wheelBoiLeft = hardwareMap.get(DcMotor.class, "wheelBoiLeft");
         wheelBoiRight = hardwareMap.get(DcMotor.class, "wheelBoiRight");
         rotateBoiLeft = hardwareMap.get(CRServo.class, "rotateBoiLeft");
