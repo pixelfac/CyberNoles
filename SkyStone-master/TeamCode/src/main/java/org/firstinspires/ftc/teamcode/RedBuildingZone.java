@@ -23,93 +23,13 @@ public class RedBuildingZone extends LinearOpMode {
     private DcMotor scisliftRight = null;
 
 
-    /*//put custom methods here
-    public void setZero()
-    {
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-    }
-
-    public void forward(int time)
-    {
-        leftDriveFront.setPower(1);
-        leftDriveBack.setPower(1);
-        rightDriveFront.setPower(-1);
-        rightDriveBack.setPower(-1);
-        sleep(time);
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-    }
-
-    public void backward(int time)
-    {
-        leftDriveFront.setPower(-1);
-        leftDriveBack.setPower(-1);
-        rightDriveFront.setPower(1);
-        rightDriveBack.setPower(1);
-        sleep(time);
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-    }
-
-    //positive is clockwise. negative is counterclockwise
-    public void turn(int theta)
-    {
-        if (theta>0) {
-            leftDriveFront.setPower(1);
-            leftDriveBack.setPower(1);
-            rightDriveFront.setPower(1);
-            rightDriveBack.setPower(1);
-        }
-        else{
-            leftDriveFront.setPower(-1);
-            leftDriveBack.setPower(-1);
-            rightDriveFront.setPower(-1);
-            rightDriveBack.setPower(-1);
-        }
-        sleep(Math.abs(theta)/180 * 1000);
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-    }
-
-    public void strafeLeft (int time){
-        leftDriveFront.setPower(-1);
-        leftDriveBack.setPower(1);
-        rightDriveFront.setPower(1);
-        rightDriveBack.setPower(-1);
-        sleep(time);
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-
-    }
-
-    public void strafeRight (int time){
-        leftDriveFront.setPower(1);
-        leftDriveBack.setPower(-1);
-        rightDriveFront.setPower(-1);
-        rightDriveBack.setPower(1);
-        sleep(time);
-        leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
-        rightDriveFront.setPower(0);
-        rightDriveBack.setPower(0);
-    }*/
+    //put custom methods here
 
     double[][] directions = {
-            {1, -1, -1, 1},   /* down     */
-            {-1, 1, 1, -1},       /* up       */
-            {1, 1, -1, -1},     /* right    */
-            {-1, -1, 1, 1}     /* left     */
+            {-1, 1, -1, 1},   /* up     */
+            {1, -1, 1, -1},   /* down     */
+            {1, 1, -1, -1},   /* left     */
+            {-1, -1, 1, 1},   /* right     */
     };
 
     public void move(String direction, long time){
@@ -147,9 +67,9 @@ public class RedBuildingZone extends LinearOpMode {
 
         waitForStart();
 
-        sleep(10000);
+       // sleep(10000);
 
-        move("forward", 2000);
+        move("forward", 1000);
 
         /*move("left", 2000);
 

@@ -7,6 +7,7 @@ import android.view.View;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -20,10 +21,47 @@ public class SensorREVColorDistance extends LinearOpMode {
 
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
+    private DcMotor motorFrontLeft;
+    private DcMotor motorFrontRight;
+    private DcMotor motorBackLeft;
+    private DcMotor motorBackRight;
     boolean seen = false;
+
+    double[][] directions = {
+            {-1, 1, -1, 1},   /* up     */
+            {1, -1, 1, -1},   /* down     */
+            {1, 1, -1, -1},   /* left     */
+            {-1, -1, 1, 1},   /* right     */
+    };
+
+    public void move(String direction, long time){
+        if (!direction.equals("none")) {
+            int d = 0;
+            if (direction.equals("forward"))
+                d = 0;
+            else if (direction.equals("down"))
+                d = 1;
+            else if (direction.equals("left"))
+                d = 2;
+            else if (direction.equals("right"))
+                d = 3;
+            motorFrontLeft.setPower(directions[d][0]);
+            motorFrontRight.setPower(directions[d][1]);
+            motorBackLeft.setPower(directions[d][2]);
+            motorBackRight.setPower(directions[d][3]);
+        } else {
+            motorFrontLeft.setPower(0);
+            motorFrontRight.setPower(0);
+            motorBackLeft.setPower(0);
+            motorBackRight.setPower(0);
+        }
+        sleep(time);
+    }
 
     @Override
     public void runOpMode() {
+
+        
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
@@ -52,6 +90,27 @@ public class SensorREVColorDistance extends LinearOpMode {
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
+
+            motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+            motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+            motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
+            motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+
+            waitForStart();
+
+            // sleep(10000);
+
+            move("forward", 1000);
+
+        /*move("left", 2000);
+
+        move("forward",2000);
+
+        move("right", 2000);
+
+        move("down", 2500);*/
+
+            move("none",0);
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
             // then cast it back to int (SCALE_FACTOR is a double)

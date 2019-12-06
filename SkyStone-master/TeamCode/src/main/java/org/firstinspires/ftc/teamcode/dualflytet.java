@@ -61,10 +61,10 @@ public class dualflytet extends LinearOpMode {
         rightArm.setDirection(DcMotor.Direction.REVERSE);
 
         double[][] directions = {
-                {1, -1, -1, 1},     /* up    */
-                {-1, 1, 1, -1},     /* down     */
-                {-1, -1, -1, -1},   /* left     */
-                {1, 1, 1, 1},       /* right       */
+                {-1, 1, -1, 1},   /* up     */
+                {1, -1, 1, -1},   /* down     */
+                {1, 1, -1, -1},   /* left     */
+                {-1, -1, 1, 1},   /* right     */
         };
 
         //leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -78,7 +78,7 @@ public class dualflytet extends LinearOpMode {
         rotateBoiRight.setPower(0);
         leftArm.setPower(0);
         rightArm.setPower(0);
-        dragger.setPosition(0.55);
+        dragger.setPosition(0.75);
         locker.setPosition(0);
         extendArm.setPower(0);
         telemetry.addData(">", "" + dragger.getPosition());
@@ -165,10 +165,11 @@ public class dualflytet extends LinearOpMode {
                 /* This code changes the power of each wheel by the same
                  * amount, depending on how far the RIGHT joystick is
                  * pressed, which will rotate the robot at a certain speed. */
-                FLpower = (FLpower + rightStickX) / 2;
+                //{-1, 1, -1, 1},   /* up     */
+                FLpower = (FLpower - rightStickX) / 2;
                 FRpower = (FRpower - rightStickX) / 2;
                 BLpower = (BLpower - rightStickX) / 2;
-                BRpower = (BRpower + rightStickX) / 2;
+                BRpower = (BRpower - rightStickX) / 2;
             }
 
             /* Applies maximum power setting */
@@ -192,7 +193,7 @@ public class dualflytet extends LinearOpMode {
                 wheelBoiLeft.setPower(1);
                 wheelBoiRight.setPower(1);
             }
-            if (gamepad1.dpad_up) {
+            if (abs(gamepad2.left_stick_y) > 0.05) {
                 leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 //pos += 20;
@@ -205,22 +206,6 @@ public class dualflytet extends LinearOpMode {
 
                 leftArm.setPower(gamepad2.left_stick_y/2);
                 rightArm.setPower(gamepad2.left_stick_y/2);
-
-                //leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                //rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            } else if (gamepad2.left_stick_y) {
-                leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                //pos -= 20;
-
-                /*leftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                leftArm.setTargetPosition(leftArm.getCurrentPosition() - 10);
-                rightArm.setTargetPosition(rightArm.getCurrentPosition() - 10);*/
-
-                leftArm.setPower(-gamepad2.left_stick_y/2);
-                rightArm.setPower(-gamepad2.left_stick_y/2);
 
                 //leftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 //rightArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
