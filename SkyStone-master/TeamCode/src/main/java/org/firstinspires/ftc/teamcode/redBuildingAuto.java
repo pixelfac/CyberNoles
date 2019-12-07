@@ -132,7 +132,7 @@ public class redBuildingAuto extends LinearOpMode {
         sleep(300);
         dragger.setPosition(0.25);
         sleep(1000);
-        move("forward",200);
+        move("forward",100);
         sleep(300);
         move("right", 850);
         move("down",2000);
@@ -145,7 +145,7 @@ public class redBuildingAuto extends LinearOpMode {
         sleep(300);
         dragger.setPosition(0.25);
         sleep(300);
-        move("forward",200);
+        move("forward",100);
         sleep(300);
         move("right", 900);
         move("down", 2000);
