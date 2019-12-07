@@ -1,28 +1,17 @@
 package org.firstinspires.ftc.teamcode;
-
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-import java.util.Locale;
-
-@Autonomous(name = "blueBuildingSensor", group = "Sensor")
-@Disabled                            // Comment this out to add to the opmode list
-public class blueBuildingSensor extends LinearOpMode {
+//imports packages to make FTC programs easier
+@Autonomous(name="Auto_RedBuildingZone", group="Linear Opmode")
+public class redBuildingAuto extends LinearOpMode {
 
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
@@ -31,13 +20,13 @@ public class blueBuildingSensor extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
-    private
+    private Servo dragger;
 
     double[][] directions = {
-            {-1, 1, 1, -1},       /* up       */
-            {1, -1, -1, 1},   /* down     */
-            {-1, -1, 1, 1},     /* left     */
-            {1, 1, -1, -1},     /* right    */
+            {0.7, -0.7, 0.7, -0.7},   /* up     */
+            {-0.7, 0.7, -0.7, 0.7},   /* down     */
+            {-0.7, -0.7, 0.7, 0.7},   /* left     */
+            {0.7, 0.7, -0.7, -0.7},   /* right     */
     };
 
     public void move(String direction, long time){
@@ -62,10 +51,21 @@ public class blueBuildingSensor extends LinearOpMode {
             motorBackRight.setPower(0);
         }
         sleep(time);
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
     }
 
     @Override
     public void runOpMode() {
+
+        motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
+        motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        dragger = hardwareMap.get(Servo.class, "dragger");
+        dragger.setPosition(0.75);
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
@@ -93,7 +93,7 @@ public class blueBuildingSensor extends LinearOpMode {
 
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
-        while (opModeIsActive()) {
+        /*while (opModeIsActive()) {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
             // then cast it back to int (SCALE_FACTOR is a double)
@@ -121,19 +121,45 @@ public class blueBuildingSensor extends LinearOpMode {
             });
 
             telemetry.update();
+        } */
+
+
+        move("left", 1800);
+        sleep(300);
+        dragger.setPosition(0.25);
+        sleep(1000);
+        move("forward",200);
+        sleep(300);
+        move("right", 850);
+        move("down",2000);
+        sleep(300);
+        dragger.setPosition(0.75);
+        sleep(300);
+
+        move("forward", 2200);
+        move("left", 900);
+        sleep(300);
+        dragger.setPosition(0.25);
+        sleep(300);
+        move("forward",200);
+        sleep(300);
+        move("right", 900);
+        move("down", 2000);
+        sleep(300);
+        dragger.setPosition(0.75);
+        sleep(300);
+
+        move("forward", 700);
 
 
 
-            if((sensorColor.red() > 10)) {
-                move("forward", 1);
-
-            }
-        }
 
         // Set the panel back to the default color
         relativeLayout.post(new Runnable() {
             public void run() {
                 relativeLayout.setBackgroundColor(Color.WHITE);
+
+
             }
         });
     }

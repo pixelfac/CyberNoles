@@ -32,7 +32,8 @@ public class dualflytet extends LinearOpMode {
     private DcMotor rightArm;
     private CRServo rotateBoiLeft;
     private CRServo rotateBoiRight;
-    private CRServo extendArm;
+    private CRServo extendArmL;
+    private CRServo extendArmR;
     private Servo dragger;
     private Servo locker;
 
@@ -54,7 +55,9 @@ public class dualflytet extends LinearOpMode {
         rightArm = hardwareMap.get(DcMotor.class, "rightArm");
         dragger = hardwareMap.get(Servo.class, "dragger");
         locker = hardwareMap.get(Servo.class, "locker");
-        extendArm = hardwareMap.get(CRServo.class, "extendArm");
+        extendArmL = hardwareMap.get(CRServo.class, "extendArmL");
+        extendArmR = hardwareMap.get(CRServo.class, "extendArmR");
+
 
         double maxPower = 0.5;
 
@@ -80,7 +83,8 @@ public class dualflytet extends LinearOpMode {
         rightArm.setPower(0);
         dragger.setPosition(0.75);
         locker.setPosition(0);
-        extendArm.setPower(0);
+        extendArmL.setPower(0);
+        extendArmR.setPower(0);
         telemetry.addData(">", "" + dragger.getPosition());
 
         telemetry.addData(">", "Press Start To Run TeleOp");
@@ -96,6 +100,9 @@ public class dualflytet extends LinearOpMode {
         int pos = 0;
 
         while (opModeIsActive()) {
+
+            //extendArmL.setPower(0.3);
+            //extendArmR.setPower(0.3);
 
             /* This inverts the joystick inputs,
              * since the joystick inputs are gay. */
@@ -222,11 +229,11 @@ public class dualflytet extends LinearOpMode {
 
             if (gamepad1.left_bumper) {
                 rotateBoiLeft.setPower(1);
-                rotateBoiRight.setPower(-1);
+                rotateBoiRight.setPower(1);
             }
             else if (gamepad1.right_bumper) {
                 rotateBoiLeft.setPower(-1);
-                rotateBoiRight.setPower(1);
+                rotateBoiRight.setPower(-1);
             }
             else if(!(gamepad1.left_bumper || gamepad1.right_bumper)){
                 rotateBoiLeft.setPower(0);
@@ -239,19 +246,22 @@ public class dualflytet extends LinearOpMode {
                 locker.setPosition(0);
             }
             if(gamepad2.x) {
-                extendArm.setPower(0.99);
+                extendArmL.setPower(0.3);
+                extendArmR.setPower(-0.3);
             }
             else if(gamepad2.y) {
-                extendArm.setPower(-0.99);
+                extendArmL.setPower(-0.3);
+                extendArmR.setPower(0.3);
             }
             else if(!(gamepad2.x || gamepad2.y)) {
-                extendArm.setPower(0);
+                extendArmL.setPower(0);
+                extendArmR.setPower(0);
             }
-            if (gamepad1.dpad_right && dragger.getPosition()+0.01 <= 1){
-                dragger.setPosition(dragger.getPosition()+0.01);
+            if (gamepad1.dpad_right){
+                dragger.setPosition(0.75);
             }
-            else if (gamepad1.dpad_left && dragger.getPosition()-0.01>=0){
-                dragger.setPosition(dragger.getPosition()-0.01);
+            else if (gamepad1.dpad_left){
+                dragger.setPosition(0.25);
             }
             else {
                 wheelBoiLeft.setPower(0);
