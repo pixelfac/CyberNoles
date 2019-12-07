@@ -147,6 +147,21 @@ public class blueBuildingAuto extends LinearOpMode {
         dragger.setPosition(0.75);
         sleep(300);
 
+        int loopNum = 0;
+        try {
+            while (Double.isNaN(sensorDistance.getDistance(DistanceUnit.CM)) || sensorDistance.getDistance(DistanceUnit.CM) > 10) {
+                telemetry.addData("Looping", loopNum);
+                telemetry.update();
+                loopNum++;
+            }
+        }
+        catch(Exception e){
+            telemetry.addData("This is ur error", e.toString());
+            telemetry.update();
+
+            sleep(5000);
+        }
+
         move("down", 2200);
         move("left", 900);
         sleep(300);
