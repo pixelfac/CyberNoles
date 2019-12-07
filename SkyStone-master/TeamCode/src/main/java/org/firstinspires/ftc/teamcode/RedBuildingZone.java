@@ -21,6 +21,7 @@ public class RedBuildingZone extends LinearOpMode {
     private Servo grabber = null;
     private DcMotor scisliftLeft = null;
     private DcMotor scisliftRight = null;
+    private Servo locker;
 
 
     //put custom methods here
@@ -56,6 +57,13 @@ public class RedBuildingZone extends LinearOpMode {
         sleep(time);
     }
 
+    public void lock(boolean yes) {
+        if (yes)
+            locker.setPosition(0.75);
+        else
+            locker.setPosition(0);
+    }
+
 
     @Override
     public void runOpMode()throws InterruptedException{
@@ -64,6 +72,7 @@ public class RedBuildingZone extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        locker = hardwareMap.get(Servo.class, "locker");
 
         waitForStart();
 
