@@ -136,16 +136,6 @@ public class blueBuildingAuto extends LinearOpMode {
 
 
         move("left", 1800);
-        sleep(300);
-        dragger.setPosition(0.25);
-        sleep(1000);
-        move("down",200);
-        sleep(300);
-        move("right", 850);
-        move("forward",2000);
-        sleep(300);
-        dragger.setPosition(0.75);
-        sleep(300);
 
         int loopNum = 0;
         try {
@@ -161,6 +151,19 @@ public class blueBuildingAuto extends LinearOpMode {
 
             sleep(5000);
         }
+
+        sleep(300);
+        dragger.setPosition(0.25);
+        sleep(1000);
+        move("down",200);
+        sleep(300);
+        move("right", 850);
+        move("forward",2000);
+        sleep(300);
+        dragger.setPosition(0.75);
+        sleep(300);
+
+
 
         move("down", 2200);
         move("left", 900);
