@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static java.lang.Math.abs;
 
@@ -21,7 +22,7 @@ public class dualflytet extends LinearOpMode {
     /* Here we tell the program that we have motors, but
      * we don't tell the program what the motors are. */
 
-
+    private ElapsedTime runtime = new ElapsedTime();
     private DcMotor motorFrontLeft;
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
@@ -75,6 +76,11 @@ public class dualflytet extends LinearOpMode {
         leftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        double draggerPos = 0.75;
+        double maxDragger = 0.75;
+        double minDragger = 0.25;
+        double debounce = runtime.seconds();
+
         wheelBoiLeft.setPower(0);
         wheelBoiRight.setPower(0);
         rotateBoiLeft.setPower(0);
@@ -85,6 +91,7 @@ public class dualflytet extends LinearOpMode {
         locker.setPosition(0);
         extendArmL.setPower(0);
         extendArmR.setPower(0);
+        boolean frick = true;
         telemetry.addData(">", "" + dragger.getPosition());
 
         telemetry.addData(">", "Press Start To Run TeleOp");
@@ -98,6 +105,8 @@ public class dualflytet extends LinearOpMode {
 
         double eigthturn = 1120/8;
         int pos = 0;
+
+        double draggerpos = 0;
 
         while (opModeIsActive()) {
 
@@ -173,10 +182,17 @@ public class dualflytet extends LinearOpMode {
                  * amount, depending on how far the RIGHT joystick is
                  * pressed, which will rotate the robot at a certain speed. */
                 //{-1, 1, -1, 1},   /* up     */
-                FLpower = (FLpower - rightStickX) / 2;
-                FRpower = (FRpower - rightStickX) / 2;
-                BLpower = (BLpower - rightStickX) / 2;
-                BRpower = (BRpower - rightStickX) / 2;
+                if (leftStickX != 0 || leftStickY != 0) {
+                    FLpower = (FLpower - rightStickX) / 2;
+                    FRpower = (FRpower - rightStickX) / 2;
+                    BLpower = (BLpower - rightStickX) / 2;
+                    BRpower = (BRpower - rightStickX) / 2;
+                } else {
+                    FLpower = -rightStickX;
+                    FRpower = -rightStickX;
+                    BLpower = -rightStickX;
+                    BRpower = -rightStickX;
+                }
             }
 
             /* Applies maximum power setting */
@@ -201,6 +217,9 @@ public class dualflytet extends LinearOpMode {
             else if (gamepad1.b) {
                 wheelBoiLeft.setPower(1);
                 wheelBoiRight.setPower(1);
+            } else {
+                wheelBoiLeft.setPower(0);
+                wheelBoiRight.setPower(0);
             }
             if (abs(gamepad2.left_stick_y) > 0.05) {
                 leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -248,29 +267,31 @@ public class dualflytet extends LinearOpMode {
                 locker.setPosition(0);
             }
             if(gamepad2.x) {
-                extendArmL.setPower(0.3);
-                extendArmR.setPower(-0.3);
+                extendArmL.setPower(0.70);
+                extendArmR.setPower(0.30);
             }
             else if(gamepad2.y) {
-                extendArmL.setPower(-0.3);
-                extendArmR.setPower(0.3);
+                extendArmL.setPower(-0.30);
+                extendArmR.setPower(-0.70);
             }
-            else if(!(gamepad2.x || gamepad2.y)) {
+            else{
                 extendArmL.setPower(0);
                 extendArmR.setPower(0);
             }
-            if (gamepad1.dpad_right){
-                dragger.setPosition(0.75);
+            if (debounce + 0.1 >= runtime.seconds()) {
+                if (gamepad1.dpad_right && draggerPos < maxDragger)
+                    draggerPos += 0.1;
+                else if (gamepad1.dpad_left && draggerPos > minDragger)
+                    draggerPos -= 0.1;
+                debounce = runtime.seconds();
+                dragger.setPosition(draggerPos);
             }
-            else if (gamepad1.dpad_left){
-                dragger.setPosition(0.25);
+            if (gamepad1.dpad_up) {
+                dragger.setPosition(0.4);
             }
-            else {
-                wheelBoiLeft.setPower(0);
-                wheelBoiRight.setPower(0);
-                leftArm.setPower(0);
-                rightArm.setPower(0);
-            }
+
+            telemetry.addData(">", "" + dragger.getPosition());
+            telemetry.update();
             /* Prevents the controller from being dead inside */
             idle();
         }

@@ -24,6 +24,8 @@ public class redBuildingAuto extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
+    private DcMotor wheelBoiLeft;
+    private DcMotor wheelBoiRight;
     private Servo dragger;
 
     double[][] directions = {
@@ -68,7 +70,12 @@ public class redBuildingAuto extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        wheelBoiLeft = hardwareMap.get(DcMotor.class, "wheelBoiLeft");
+        wheelBoiRight = hardwareMap.get(DcMotor.class, "wheelBoiRight");
         dragger = hardwareMap.get(Servo.class, "dragger");
+
+        wheelBoiLeft.setPower(0);
+        wheelBoiRight.setPower(0);
         dragger.setPosition(0.75);
 
         // get a reference to the color sensor.

@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 //imports packages to make FTC programs easier
-@Autonomous(name="Auto_BlueBuildingZone", group="Linear Opmode")
+@Autonomous(name="sans", group="Linear Opmode")
 public class BlueBuildingZone extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -27,7 +27,7 @@ public class BlueBuildingZone extends LinearOpMode {
     public void setZero()
     {
         leftDriveFront.setPower(0);
-        leftDriveBack.setPower(0);
+        leftDriveBack.setPower(0); n
         rightDriveFront.setPower(0);
         rightDriveBack.setPower(0);
     }

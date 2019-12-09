@@ -20,9 +20,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
 
-@Autonomous(name = "Auto_BlueBuildingZone", group = "Linear OpMode")
+@Autonomous(name = "Auto_BlueColor", group = "Linear OpMode")
 //@Disabled                            // Comment this out to add to the opmode list
-public class blueBuildingAuto extends LinearOpMode {
+public class blueColorAuto extends LinearOpMode {
 
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
@@ -153,7 +153,7 @@ public class blueBuildingAuto extends LinearOpMode {
         }
 
         sleep(300);
-        dragger.setPosition(0.25);
+        //dragger.setPosition(0.25);
         sleep(1000);
         move("down",100);
         sleep(300);
