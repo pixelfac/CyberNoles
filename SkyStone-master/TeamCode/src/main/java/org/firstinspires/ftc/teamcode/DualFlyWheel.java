@@ -16,8 +16,8 @@ import static java.lang.Math.abs;
 
 /* This is the start of the program for our
  * cool TeleOp controller. */
-@TeleOp(name = "DualFly", group = "T3")
-public class dualflytet extends LinearOpMode {
+@TeleOp(name = "DualFlyWheel", group = "T3")
+public class DualFlyWheel extends LinearOpMode {
 
     /* Here we tell the program that we have motors, but
      * we don't tell the program what the motors are. */
