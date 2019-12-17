@@ -44,7 +44,7 @@ public class Comp3S2 extends LinearOpMode {
         rotateBoiLeft = hardwareMap.get(CRServo.class, "rotateBoiLeft");
         rotateBoiRight = hardwareMap.get(CRServo.class, "rotateBoiRight");
 
-        double maxPower = 0.5;
+        double maxPower = 1;
 
         double[][] directions = {
                 {-1, 1, -1, 1},   /* up     */
@@ -68,9 +68,6 @@ public class Comp3S2 extends LinearOpMode {
          * is meant to. */
 
         while (opModeIsActive()) {
-
-            //extendArmL.setPower(0.3);
-            //extendArmR.setPower(0.3);
 
             /* This inverts the joystick inputs,
              * since the joystick inputs are gay. */
@@ -168,7 +165,7 @@ public class Comp3S2 extends LinearOpMode {
             motorBackRight.setPower(BRpower);
 
 
-
+            //other buttons
             if (gamepad2.dpad_left) {
                 wheelBoiLeft.setPower(-1);
                 wheelBoiRight.setPower(-1);
