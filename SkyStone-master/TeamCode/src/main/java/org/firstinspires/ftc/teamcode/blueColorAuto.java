@@ -31,7 +31,7 @@ public class blueColorAuto extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
-    private Servo dragger;
+
 
     double[][] directions = {
             {0.7, -0.7, 0.7, -0.7},   /* up     */
@@ -75,8 +75,6 @@ public class blueColorAuto extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
-        dragger = hardwareMap.get(Servo.class, "dragger");
-        dragger.setPosition(0.75);
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
@@ -135,61 +133,11 @@ public class blueColorAuto extends LinearOpMode {
         } */
 
 
-        move("left", 1800);
-
-        int loopNum = 0;
-        try {
-            while (Double.isNaN(sensorDistance.getDistance(DistanceUnit.CM)) || sensorDistance.getDistance(DistanceUnit.CM) > 10) {
-                telemetry.addData("Looping", loopNum);
-                telemetry.update();
-                loopNum++;
-            }
-        }
-        catch(Exception e){
-            telemetry.addData("This is ur error", e.toString());
+        while (true) {
+            telemetry.addData("alpha", sensorColor.alpha());
             telemetry.update();
-
-            sleep(5000);
         }
 
-        sleep(300);
-        //dragger.setPosition(0.25);
-        sleep(1000);
-        move("down",100);
-        sleep(300);
-        move("right", 850);
-        move("forward",2000);
-        sleep(300);
-        dragger.setPosition(0.75);
-        sleep(300);
 
-
-
-        move("down", 2200);
-        move("left", 900);
-        sleep(300);
-        dragger.setPosition(0.25);
-        sleep(300);
-        move("down",100);
-        sleep(300);
-        move("right", 900);
-        move("forward", 2000);
-        sleep(300);
-        dragger.setPosition(0.75);
-        sleep(300);
-
-        move("down", 700);
-
-
-
-
-        // Set the panel back to the default color
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                relativeLayout.setBackgroundColor(Color.WHITE);
-
-
-            }
-        });
     }
 }
