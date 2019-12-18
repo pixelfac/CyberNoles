@@ -132,10 +132,13 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.update();
         } */
 
+        boolean is_5 = false;
 
         while (true) {
+            if(sensorDistance.getDistance(DistanceUnit.CM) > 9 && sensorDistance.getDistance(DistanceUnit.CM) < 11);
+                is_5 = true;
             telemetry.addData("alpha", sensorColor.alpha());
-            telemetry.addData("distance", "" + sensorDistance.getDistance(DistanceUnit.CM));
+            telemetry.addData("if 5", is_5);
             telemetry.update();
 
         }
