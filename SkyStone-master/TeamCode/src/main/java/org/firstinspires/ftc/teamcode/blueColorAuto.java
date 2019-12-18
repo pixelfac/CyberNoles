@@ -71,10 +71,10 @@ public class blueColorAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
-        motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
-        motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        //motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        //motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        //motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
+        //motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
