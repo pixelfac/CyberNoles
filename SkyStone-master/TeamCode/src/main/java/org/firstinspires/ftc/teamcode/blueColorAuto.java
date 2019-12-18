@@ -135,7 +135,9 @@ public class blueColorAuto extends LinearOpMode {
 
         while (true) {
             telemetry.addData("alpha", sensorColor.alpha());
+            telemetry.addData("distance", "" + sensorDistance.getDistance(DistanceUnit.CM));
             telemetry.update();
+
         }
 
 
