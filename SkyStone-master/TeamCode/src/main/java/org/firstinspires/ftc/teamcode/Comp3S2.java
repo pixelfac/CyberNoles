@@ -12,9 +12,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static java.lang.Math.abs;
+
 /* This is the start of the program for our
  * cool TeleOp controller. */
-@TeleOp(name = "Comp3S2" group = "T3")
+@TeleOp(name = "Comp3S2", group = "T3")
 public class Comp3S2 extends LinearOpMode {
 
     /* Here we tell the program that we have motors, but
@@ -25,10 +27,23 @@ public class Comp3S2 extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
-    private DcMotor wheelBoiLeft;
-    private DcMotor wheelBoiRight;
-    private CRServo rotateBoiLeft;
-    private CRServo rotateBoiRight;
+
+
+    //extend the flywheels
+    private CRServo extendWheelLeft;
+    private CRServo extendWheelRight;
+    //spin the flywheels
+    private DcMotor rotateWheelLeft;
+    private DcMotor rotateWheelRight;
+
+
+    //grabs the block and lifts it respectively
+    private CRServo blockGrab;
+    private DcMotor blockLift;
+
+    private Servo dragger;
+
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -39,10 +54,10 @@ public class Comp3S2 extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
-        wheelBoiLeft = hardwareMap.get(DcMotor.class, "wheelBoiLeft");
-        wheelBoiRight = hardwareMap.get(DcMotor.class, "wheelBoiRight");
-        rotateBoiLeft = hardwareMap.get(CRServo.class, "rotateBoiLeft");
-        rotateBoiRight = hardwareMap.get(CRServo.class, "rotateBoiRight");
+        rotateWheelLeft = hardwareMap.get(DcMotor.class, "rotateWheelLeft");
+        rotateWheelRight = hardwareMap.get(DcMotor.class, "rotateWheelRight");
+        extendWheelLeft = hardwareMap.get(CRServo.class, "extendWheelLeft");
+        extendWheelRight = hardwareMap.get(CRServo.class, "extendWheelRight");
 
         double maxPower = 1;
 
@@ -53,10 +68,10 @@ public class Comp3S2 extends LinearOpMode {
                 {-1, -1, 1, 1},   /* right     */
         };
 
-        wheelBoiLeft.setPower(0);
-        wheelBoiRight.setPower(0);
-        rotateBoiLeft.setPower(0);
-        rotateBoiRight.setPower(0);
+        rotateWheelLeft.setPower(0);
+        rotateWheelRight.setPower(0);
+        extendWheelLeft.setPower(0);
+        extendWheelRight.setPower(0);
 
         telemetry.addData(">", "Press Start To Run TeleOp");
         telemetry.update();
@@ -165,30 +180,43 @@ public class Comp3S2 extends LinearOpMode {
             motorBackRight.setPower(BRpower);
 
 
-            //other buttons
-            if (gamepad2.dpad_left) {
-                wheelBoiLeft.setPower(-1);
-                wheelBoiRight.setPower(-1);
+            //rotates the flywheels in tandem
+            //Down rotates inwards, Up rotates outwards
+            if (gamepad2.dpad_down) {
+                rotateWheelLeft.setPower(-1);
+                rotateWheelRight.setPower(-1);
             }
-            else if (gamepad2.dpad_right) {
-                wheelBoiLeft.setPower(1);
-                wheelBoiRight.setPower(1);
+            else if (gamepad2.dpad_up) {
+                rotateWheelLeft.setPower(1);
+                rotateWheelRight.setPower(1);
             } else {
-                wheelBoiLeft.setPower(0);
-                wheelBoiRight.setPower(0);
+                rotateWheelLeft.setPower(0);
+                rotateWheelRight.setPower(0);
             }
-            if (gamepad2.dpad_up) {
-                rotateBoiLeft.setPower(1);
-                rotateBoiRight.setPower(1);
+
+            //Left trigger extends left flywheel, right bumper retracts
+            if (gamepad2.left_bumper) {
+                extendWheelLeft.setPower(1);
             }
-            else if (gamepad2.dpad_down) {
-                rotateBoiLeft.setPower(-1);
-                rotateBoiRight.setPower(-1);
+            else if (gamepad2.left_trigger > 0.05) {
+                extendWheelLeft.setPower(-1);
             }
-            else if(!(gamepad2.dpad_up || gamepad2.dpad_down)){
-                rotateBoiLeft.setPower(0);
-                rotateBoiRight.setPower(0);
+            else {
+                extendWheelLeft.setPower(0);
             }
+
+            //Right trigger extends right flywheel, right bumper retracts
+            if (gamepad2.right_bumper) {
+                extendWheelRight.setPower(1);
+            }
+            else if (gamepad2.right_trigger > 0.05) {
+                extendWheelRight.setPower(-1);
+            }
+            else {
+                extendWheelRight.setPower(0);
+            }
+
+
             telemetry.update();
             /* Prevents the controller from being dead inside */
             idle();

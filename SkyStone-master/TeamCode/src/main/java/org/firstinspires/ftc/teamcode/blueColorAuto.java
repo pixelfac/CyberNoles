@@ -31,21 +31,39 @@ public class blueColorAuto extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
+    private Servo dragger;
 
 
     double[][] directions = {
-            {0.7, -0.7, 0.7, -0.7},   /* up     */
-            {-0.7, 0.7, -0.7, 0.7},   /* down     */
-            {-0.7, -0.7, 0.7, 0.7},   /* left     */
-            {0.7, 0.7, -0.7, -0.7},   /* right     */
+            {0.7, -0.7, 0.7, -0.7},   /* forward      */
+            {-0.7, 0.7, -0.7, 0.7},   /* backward     */
+            {-0.7, -0.7, 0.7, 0.7},   /* strafe left  */
+            {0.7, 0.7, -0.7, -0.7},   /* strafe right */
     };
+
+    public void getBlock()
+    {
+        //move within range of dragger
+        move("forward", 69);
+        //dragger grabs block
+        dragger.setPosition(0.33);
+        //pull block away from line
+        move("backward", 69);
+        //move through the skybridge with block
+        move("strafe right", 21);
+        //release block
+        dragger.setPosition(0);
+
+    }
+
+
 
     public void move(String direction, long time){
         if (!direction.equals("none")) {
             int d = 0;
             if (direction.equals("forward"))
                 d = 0;
-            else if (direction.equals("down"))
+            else if (direction.equals("backward"))
                 d = 1;
             else if (direction.equals("left"))
                 d = 2;
@@ -144,8 +162,20 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.addData("distance", sensorDistance.getDistance(DistanceUnit.CM));
             telemetry.update();
 
-        }
+            //move close enough to the stones for sensor to work
+            move("forward", 420);
+            //scan the block
+            if (sensorColor.alpha() > 1 && sensorColor.alpha() < 69 )
+            {
+                getBlock();
+            }
+       else {
+                //scan again
+            }
 
+            //park underneath skybridge
+            move("strafe left", 19);
 
     }
+}
 }
