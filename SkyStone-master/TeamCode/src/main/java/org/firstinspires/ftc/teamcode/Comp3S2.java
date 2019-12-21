@@ -81,11 +81,10 @@ public class Comp3S2 extends LinearOpMode {
         extendWheelLeft.setPower(0);
         extendWheelRight.setPower(0);
 
-        double draggerPos = 0.75;
-        double maxDragger = 0.75;
-        double minDragger = 0.25;
-        double debounce = runtime.seconds();
-        dragger.setPosition(0.75);
+        double draggerPos = 0.0;
+        double maxDragger = 0.30;
+        double minDragger = 0.10;
+        double debounce = runtime.seconds() + 0.0;
 
         telemetry.addData(">", "Press Start To Run TeleOp");
         telemetry.update();
@@ -209,22 +208,16 @@ public class Comp3S2 extends LinearOpMode {
             }
 
             //Left trigger extends left flywheel, right bumper retracts
-            if (gamepad2.left_bumper) {
-                extendWheelLeft.setPower(1);
-            }
-            else if (gamepad2.left_trigger > 0.05) {
-                extendWheelLeft.setPower(-1);
+            if (abs(gamepad2.left_stick_y) > 0.05f) {
+                extendWheelLeft.setPower(gamepad2.left_stick_y);
             }
             else {
                 extendWheelLeft.setPower(0);
             }
 
             //Right trigger extends right flywheel, right bumper retracts
-            if (gamepad2.right_bumper) {
-                extendWheelRight.setPower(1);
-            }
-            else if (gamepad2.right_trigger > 0.05) {
-                extendWheelRight.setPower(-1);
+            if (abs(gamepad2.right_stick_y) > 0.05f) {
+                extendWheelRight.setPower(gamepad2.right_stick_y);
             }
             else {
                 extendWheelRight.setPower(0);
@@ -259,24 +252,35 @@ public class Comp3S2 extends LinearOpMode {
 
             //block grabbing mechanism
             //x closes, y opens
-            if (gamepad2.x)
+            if (gamepad2.x) {
                 blockGrab.setPower(1);
-            else if (gamepad2.y)
+            }
+            else if (gamepad2.y) {
                 blockGrab.setPower(-1);
-            else
+            }
+            else {
                 blockGrab.setPower(0);
-
-            if (debounce + 0.1 >= runtime.seconds()) {
+            }
+            /*if (debounce + 0.1 <= runtime.seconds()) {
                 if (gamepad1.dpad_right && draggerPos < maxDragger)
-                    draggerPos += 0.1;
+                    draggerPos += 0.05;
                 else if (gamepad1.dpad_left && draggerPos > minDragger)
-                    draggerPos -= 0.1;
-                debounce = runtime.seconds();
-                dragger.setPosition(draggerPos);
-            }
+                    draggerPos -= 0.05;
+                if (draggerPos > maxDragger)
+                    draggerPos = maxDragger;
+                else if (draggerPos < minDragger)
+                    draggerPos = minDragger;
+                debounce = runtime.seconds() + 0.0;
+                //dragger.setPosition(draggerPos);
+            }*/
             if (gamepad1.dpad_up) {
-                dragger.setPosition(0.4);
+               draggerPos = minDragger;
             }
+            if (gamepad1.dpad_down) {
+                draggerPos = maxDragger;
+            }
+            telemetry.addData(">", "draggerpos: " + draggerPos);
+            dragger.setPosition(draggerPos);
 
 
             //need to program functionality for dragger

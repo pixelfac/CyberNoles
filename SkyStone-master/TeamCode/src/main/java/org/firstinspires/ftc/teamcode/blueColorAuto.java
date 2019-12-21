@@ -89,10 +89,12 @@ public class blueColorAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        //motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
-        //motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
-        //motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
-        //motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+        motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
+        motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
+        motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
+        motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+
+        dragger = hardwareMap.get(Servo.class, "dragger");
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
@@ -163,7 +165,7 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.update();
 
             //move close enough to the stones for sensor to work
-            move("forward", 420);
+            move("backward", 1000);
             //scan the block
             if (sensorColor.alpha() > 1 && sensorColor.alpha() < 69 )
             {
