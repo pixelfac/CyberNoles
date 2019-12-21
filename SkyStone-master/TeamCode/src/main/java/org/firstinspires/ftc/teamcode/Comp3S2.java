@@ -64,6 +64,8 @@ public class Comp3S2 extends LinearOpMode {
         blockLift = hardwareMap.get(DcMotor.class, "blockLift");
         dragger = hardwareMap.get(Servo.class, "dragger");
 
+        blockLift.ZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         double maxPower = 1;
 
@@ -78,6 +80,12 @@ public class Comp3S2 extends LinearOpMode {
         rotateWheelRight.setPower(0);
         extendWheelLeft.setPower(0);
         extendWheelRight.setPower(0);
+
+        double draggerPos = 0.75;
+        double maxDragger = 0.75;
+        double minDragger = 0.25;
+        double debounce = runtime.seconds();
+        dragger.setPosition(0.75);
 
         telemetry.addData(">", "Press Start To Run TeleOp");
         telemetry.update();
@@ -227,25 +235,26 @@ public class Comp3S2 extends LinearOpMode {
             if (gamepad2.a)
             {
                 //reverts to normal functionality
-                blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                //blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 //turns on
                 blockLift.setPower(0.5);
             }
             else if (gamepad2.b)
             {
                 //reverts to normal functionality
-                blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                //blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 //turns on
                 blockLift.setPower(-0.5);
             }
             else
             {
                 //turns on encorder functionality
-                blockLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //blockLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 //sets current position as target
-                blockLift.setTargetPosition(0);
+                //blockLift.setTargetPosition(0);
                 //tries to stay at current position
-                blockLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                //blockLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                blockLift.setPower(0.0);
             }
 
             //block grabbing mechanism
@@ -256,6 +265,18 @@ public class Comp3S2 extends LinearOpMode {
                 blockGrab.setPower(-1);
             else
                 blockGrab.setPower(0);
+
+            if (debounce + 0.1 >= runtime.seconds()) {
+                if (gamepad1.dpad_right && draggerPos < maxDragger)
+                    draggerPos += 0.1;
+                else if (gamepad1.dpad_left && draggerPos > minDragger)
+                    draggerPos -= 0.1;
+                debounce = runtime.seconds();
+                dragger.setPosition(draggerPos);
+            }
+            if (gamepad1.dpad_up) {
+                dragger.setPosition(0.4);
+            }
 
 
             //need to program functionality for dragger
