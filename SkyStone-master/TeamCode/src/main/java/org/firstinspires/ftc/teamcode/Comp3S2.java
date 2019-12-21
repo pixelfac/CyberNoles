@@ -64,7 +64,7 @@ public class Comp3S2 extends LinearOpMode {
         blockLift = hardwareMap.get(DcMotor.class, "blockLift");
         dragger = hardwareMap.get(Servo.class, "dragger");
 
-        blockLift.ZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        blockLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         double maxPower = 1;
