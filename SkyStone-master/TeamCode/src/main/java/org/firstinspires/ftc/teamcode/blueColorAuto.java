@@ -79,7 +79,8 @@ public class blueColorAuto extends LinearOpMode {
             motorBackLeft.setPower(0);
             motorBackRight.setPower(0);
         }
-        sleep(time);
+        double debounce = runtime.seconds() + 0.0;
+        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
@@ -154,7 +155,7 @@ public class blueColorAuto extends LinearOpMode {
 
         boolean is_5;
 
-        while (true) {
+        while (opModeIsActive()) {
             if(sensorDistance.getDistance(DistanceUnit.CM) > 9 && sensorDistance.getDistance(DistanceUnit.CM) < 11)
                 is_5 = true;
                 else
