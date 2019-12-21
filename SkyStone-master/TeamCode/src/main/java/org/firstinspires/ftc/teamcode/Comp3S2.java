@@ -54,10 +54,16 @@ public class Comp3S2 extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+
         rotateWheelLeft = hardwareMap.get(DcMotor.class, "rotateWheelLeft");
         rotateWheelRight = hardwareMap.get(DcMotor.class, "rotateWheelRight");
         extendWheelLeft = hardwareMap.get(CRServo.class, "extendWheelLeft");
         extendWheelRight = hardwareMap.get(CRServo.class, "extendWheelRight");
+
+        blockGrab = hardwareMap.get(CRServo.class, "blockGrab");
+        blockLift = hardwareMap.get(DcMotor.class, "blockLift");
+        dragger = hardwareMap.get(Servo.class, "dragger");
+
 
         double maxPower = 1;
 
@@ -216,6 +222,43 @@ public class Comp3S2 extends LinearOpMode {
                 extendWheelRight.setPower(0);
             }
 
+            //block lifter arm
+            //a lifts, b lowers, defaults at brake
+            if (gamepad2.a)
+            {
+                //reverts to normal functionality
+                blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                //turns on
+                blockLift.setPower(0.5);
+            }
+            else if (gamepad2.b)
+            {
+                //reverts to normal functionality
+                blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                //turns on
+                blockLift.setPower(-0.5);
+            }
+            else
+            {
+                //turns on encorder functionality
+                blockLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //sets current position as target
+                blockLift.setTargetPosition(0);
+                //tries to stay at current position
+                blockLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+
+            //block grabbing mechanism
+            //x closes, y opens
+            if (gamepad2.x)
+                blockGrab.setPower(1);
+            else if (gamepad2.y)
+                blockGrab.setPower(-1);
+            else
+                blockGrab.setPower(0);
+
+
+            //need to program functionality for dragger
 
             telemetry.update();
             /* Prevents the controller from being dead inside */
