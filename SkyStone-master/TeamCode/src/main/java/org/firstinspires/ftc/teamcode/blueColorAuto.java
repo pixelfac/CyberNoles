@@ -155,22 +155,22 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.update();
         } */
 
-        boolean is_5;
+        boolean is_dist;
 
         while (opModeIsActive()) {
-            if(sensorDistance.getDistance(DistanceUnit.CM) > 9 && sensorDistance.getDistance(DistanceUnit.CM) < 11)
-                is_5 = true;
+            if(sensorDistance.getDistance(DistanceUnit.CM) > 6.5 && sensorDistance.getDistance(DistanceUnit.CM) < 7                                                              )
+                is_dist = true;
                 else
-                    is_5 = false;
+                    is_dist = false;
             telemetry.addData("alpha", sensorColor.alpha());
-            telemetry.addData("if 5", is_5);
+            telemetry.addData("if dist", is_dist);
             telemetry.addData("distance", sensorDistance.getDistance(DistanceUnit.CM));
             telemetry.update();
 
             //move close enough to the stones for sensor to work
             move("backward", 1000);
             //scan the block
-            if (sensorColor.alpha() > 1 && sensorColor.alpha() < 69 )
+            if (sensorColor.alpha() > 200 && sensorColor.alpha() < 300 )
             {
                 getBlock();
             }

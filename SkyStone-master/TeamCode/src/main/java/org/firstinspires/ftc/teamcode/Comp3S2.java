@@ -41,7 +41,7 @@ public class Comp3S2 extends LinearOpMode {
     private CRServo blockGrab;
     private DcMotor blockLift;
 
-    private Servo dragger;
+    private CRServo dragger;
 
 
 
@@ -62,7 +62,7 @@ public class Comp3S2 extends LinearOpMode {
 
         blockGrab = hardwareMap.get(CRServo.class, "blockGrab");
         blockLift = hardwareMap.get(DcMotor.class, "blockLift");
-        dragger = hardwareMap.get(Servo.class, "dragger");
+        dragger = hardwareMap.get(CRServo.class, "dragger");
 
         blockLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -82,8 +82,8 @@ public class Comp3S2 extends LinearOpMode {
         extendWheelRight.setPower(0);
 
         double draggerPos = 0.0;
-        double maxDragger = 1;
-        double minDragger = 0.60;
+        double maxDragger = .8;
+        double minDragger = 0.70;
         double debounce = runtime.seconds() + 0.0;
 
         telemetry.addData(">", "Press Start To Run TeleOp");
@@ -275,11 +275,15 @@ public class Comp3S2 extends LinearOpMode {
             }*/
             if (gamepad1.dpad_up) {
                draggerPos = minDragger;
-               dragger.setPosition(draggerPos);
+               dragger.setPower(0.6);
             }
             if (gamepad1.dpad_down) {
                 draggerPos = maxDragger;
-                dragger.setPosition(draggerPos);
+                dragger.setPower(-0.6);
+            }
+            else if (!(gamepad1.dpad_up ||gamepad1.dpad_down))
+            {
+                dragger.setPower(0);
             }
             telemetry.addData(">", "draggerpos: " + draggerPos);
 
