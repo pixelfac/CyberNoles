@@ -41,6 +41,8 @@ public class blueColorAuto extends LinearOpMode {
             {0.7, 0.7, -0.7, -0.7},   /* strafe right */
     };
 
+    int ticks = 1120;
+
     public void getBlock()
     {
         //move within range of dragger

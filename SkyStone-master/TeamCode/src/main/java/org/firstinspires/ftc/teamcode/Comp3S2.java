@@ -82,8 +82,8 @@ public class Comp3S2 extends LinearOpMode {
         extendWheelRight.setPower(0);
 
         double draggerPos = 0.0;
-        double maxDragger = 0.30;
-        double minDragger = 0.10;
+        double maxDragger = 1;
+        double minDragger = 0.60;
         double debounce = runtime.seconds() + 0.0;
 
         telemetry.addData(">", "Press Start To Run TeleOp");
@@ -207,7 +207,7 @@ public class Comp3S2 extends LinearOpMode {
                 rotateWheelRight.setPower(0);
             }
 
-            //Left trigger extends left flywheel, right bumper retracts
+            //Left stick extends/retracts left flywheel
             if (abs(gamepad2.left_stick_y) > 0.05f) {
                 extendWheelLeft.setPower(gamepad2.left_stick_y);
             }
@@ -215,7 +215,7 @@ public class Comp3S2 extends LinearOpMode {
                 extendWheelLeft.setPower(0);
             }
 
-            //Right trigger extends right flywheel, right bumper retracts
+            //Right stick extends/retracts right flywheel
             if (abs(gamepad2.right_stick_y) > 0.05f) {
                 extendWheelRight.setPower(gamepad2.right_stick_y);
             }
@@ -275,12 +275,14 @@ public class Comp3S2 extends LinearOpMode {
             }*/
             if (gamepad1.dpad_up) {
                draggerPos = minDragger;
+               dragger.setPosition(draggerPos);
             }
             if (gamepad1.dpad_down) {
                 draggerPos = maxDragger;
+                dragger.setPosition(draggerPos);
             }
             telemetry.addData(">", "draggerpos: " + draggerPos);
-            dragger.setPosition(draggerPos);
+
 
 
             //need to program functionality for dragger
