@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+
+//parks the robot under the skybridge starting from the edge of the Human depot box
+
+
 @Autonomous(name="Auto_BlueBridgeZone", group="Linear Opmode")
 public class blueBridgeAuto extends LinearOpMode {
 
