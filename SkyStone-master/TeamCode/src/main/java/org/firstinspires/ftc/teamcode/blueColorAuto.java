@@ -35,174 +35,47 @@ public class blueColorAuto extends LinearOpMode {
 
 
     double[][] directions = {
-            {0.7, -0.7, 0.7, -0.7},   /* forward      */
-            {-0.7, 0.7, -0.7, 0.7},   /* backward     */
-            {-0.7, -0.7, 0.7, 0.7},   /* strafe left  */
-            {0.7, 0.7, -0.7, -0.7},   /* strafe right */
+            {1, -1, 1, -1},   /* up     */
+            {-1, 1, -1, 1},   /* down     */
+            {-1, -1, 1, 1},   /* left     */
+            {1, 1, -1, -1},   /* right     */
     };
 
-
-    //int ticks = 1120;
-
-    /*
-    public void getBlock()
-    {
-        //move within range of dragger
-        move("forward", 69);
-        //dragger grabs block
-        dragger.setPosition(0.33);
-        //pull block away from line
-        move("backward", 69);
-        //move through the skybridge with block
-        move("strafe right", 21);
-        //release block
-        dragger.setPosition(0);
-
-    }
-    */
-
-
-    public void forward(int tick) {
-        if (opModeIsActive()) {
-
-            telemetry.addData(">", "1");
-            telemetry.update();
-            motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + tick);
-            motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() - tick);
-            motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + tick);
-            motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() - tick);
-            telemetry.addData(">", "2");
-            telemetry.update();
-            motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            telemetry.addData(">", "3");
-            telemetry.update();
-            runtime.reset();
-            motorFrontLeft.setPower(0.7);
-            motorFrontRight.setPower(0.7);
-            motorBackLeft.setPower(0.7);
-            motorBackRight.setPower(0.7);
-            telemetry.addData(">", "4");
-            telemetry.update();
-            motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorBackLeft.setPower(0);
-            motorBackRight.setPower(0);
-            telemetry.addData(">", "5");
-            telemetry.update();
-            motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            telemetry.addData(">", "6");
-            telemetry.update();
-
-
-            //double debounce = runtime.seconds() + 0.0;
-            //while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {
-            //    motorFrontLeft.setPower(0);
-            //    motorFrontRight.setPower(0);
-            //    motorBackLeft.setPower(0);
-            //    motorBackRight.setPower(0);
-            //}
-        }
+    public boolean close(int currentPos, int targetPos) {
+        if (Math.abs(currentPos - targetPos) < 3) return true;
+        return false;
     }
 
-    public void backward(int tick)
-    {
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void move(String direction, int time){
+        /*motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() - tick);
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + tick);
-        motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() - tick);
-        motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + tick);
-
-
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        motorFrontLeft.setPower(0.7);
-        motorFrontRight.setPower(0.7);
-        motorBackLeft.setPower(0.7);
-        motorBackRight.setPower(0.7);
-
-        double debounce = runtime.seconds() + 0.0;
-        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {
-            motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorBackLeft.setPower(0);
-            motorBackRight.setPower(0);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        if (!direction.equals("none")) {
+            int d = 0;
+            if (direction.equals("forward"))
+                d = 0;
+            else if (direction.equals("backward"))
+                d = 1;
+            else if (direction.equals("left"))
+                d = 2;
+            else if (direction.equals("right"))
+                d = 3;
+            motorFrontLeft.setPower((directions[d][0]));
+            motorFrontRight.setPower((directions[d][1]));
+            motorBackLeft.setPower((directions[d][2]));
+            motorBackRight.setPower((directions[d][3]));
         }
-    }
-
-    public void strafeLeft(int tick)
-    {
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() - tick);
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() - tick);
-        motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() + tick);
-        motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() + tick);
-
-
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        motorFrontLeft.setPower(0.7);
-        motorFrontRight.setPower(0.7);
-        motorBackLeft.setPower(0.7);
-        motorBackRight.setPower(0.7);
-
         double debounce = runtime.seconds() + 0.0;
-        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {
-            motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorBackLeft.setPower(0);
-            motorBackRight.setPower(0);
-        }
-    }
+        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
+        //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
+        //    telemetry.addData("Hue", "h");
+        //}
 
-    public void strafeRight(int tick) {
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() + tick);
-        motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() + tick);
-        motorBackLeft.setTargetPosition(motorBackLeft.getCurrentPosition() - tick);
-        motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() - tick);
-
-
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        motorFrontLeft.setPower(0.7);
-        motorFrontRight.setPower(0.7);
-        motorBackLeft.setPower(0.7);
-        motorBackRight.setPower(0.7);
-
-        double debounce = runtime.seconds() + 0.0;
-        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {
-            motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorBackLeft.setPower(0);
-            motorBackRight.setPower(0);
-        }
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
     }
 
     @Override
@@ -236,28 +109,14 @@ public class blueColorAuto extends LinearOpMode {
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
-
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        telemetry.addData(">", "0");
-        telemetry.update();
-
         // wait for the start button to be pressed.
-        waitForStart();
+        //waitForStart();
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        move("backward", 5000);
 
-        telemetry.addData(">", "0.5");
-        telemetry.update();
-        forward(1120);
-        telemetry.addData(">", "7");
-        telemetry.update();
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         /*while (opModeIsActive()) {
@@ -290,26 +149,23 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.update();
         } */
 
-        /*
-
-        boolean is_dist;
+        /*boolean is_5;
 
         while (opModeIsActive()) {
-            if(sensorDistance.getDistance(DistanceUnit.CM) > 6.5 && sensorDistance.getDistance(DistanceUnit.CM) < 7                                                              )
-                is_dist = true;
+            if(sensorDistance.getDistance(DistanceUnit.CM) > 9 && sensorDistance.getDistance(DistanceUnit.CM) < 11)
+                is_5 = true;
                 else
-                    is_dist = false;
+                    is_5 = false;
             telemetry.addData("alpha", sensorColor.alpha());
-            telemetry.addData("if dist", is_dist);
+            telemetry.addData("if 5", is_5);
             telemetry.addData("distance", sensorDistance.getDistance(DistanceUnit.CM));
             telemetry.update();
 
             //move close enough to the stones for sensor to work
             move("backward", 1000);
             //scan the block
-            if (sensorColor.alpha() > 200 && sensorColor.alpha() < 300 )
+            if (sensorColor.alpha() > 1 && sensorColor.alpha() < 69 )
             {
-                getBlock();
             }
        else {
                 //scan again
@@ -317,8 +173,6 @@ public class blueColorAuto extends LinearOpMode {
 
             //park underneath skybridge
             move("strafe left", 19);
-
-            */
+        */
     }
 }
-
