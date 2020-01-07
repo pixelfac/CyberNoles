@@ -276,7 +276,7 @@ public class Comp3S2 extends LinearOpMode {
             if (gamepad1.dpad_up) {
                draggerPos = minDragger;
                dragger.setPower(0.6);
-            }
+            } else
             if (gamepad1.dpad_down) {
                 draggerPos = maxDragger;
                 dragger.setPower(-0.6);

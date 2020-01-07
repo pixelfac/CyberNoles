@@ -46,11 +46,11 @@ public class blueColorAuto extends LinearOpMode {
         return false;
     }
 
-    public void move(String direction, int time){
-        /*motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void move(String direction, int ticks){
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         if (!direction.equals("none")) {
             int d = 0;
             if (direction.equals("forward"))
@@ -61,21 +61,21 @@ public class blueColorAuto extends LinearOpMode {
                 d = 2;
             else if (direction.equals("right"))
                 d = 3;
-            motorFrontLeft.setPower((directions[d][0]));
-            motorFrontRight.setPower((directions[d][1]));
-            motorBackLeft.setPower((directions[d][2]));
-            motorBackRight.setPower((directions[d][3]));
+            motorFrontLeft.setTargetPosition((int)(directions[d][0] * ticks));
+            motorFrontRight.setTargetPosition((int)(directions[d][1] * ticks));
+            motorBackLeft.setTargetPosition((int)(directions[d][2] * ticks));
+            motorBackRight.setTargetPosition((int)(directions[d][3] * ticks));
         }
-        double debounce = runtime.seconds() + 0.0;
-        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
-        //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
-        //    telemetry.addData("Hue", "h");
-        //}
+        //double debounce = runtime.seconds() + 0.0;
+        //while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
+        while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
+            telemetry.addData("Hue", "h");
+        }
 
-        motorFrontLeft.setPower(0);
-        motorFrontRight.setPower(0);
-        motorBackLeft.setPower(0);
-        motorBackRight.setPower(0);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     @Override
@@ -110,12 +110,19 @@ public class blueColorAuto extends LinearOpMode {
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
         // wait for the start button to be pressed.
-        //waitForStart();
+        waitForStart();
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        move("backward", 5000);
+
+
+        telemetry.addData("checkpoint", "1");
+        telemetry.update();
+        move("backward", 1120);
+        telemetry.addData("checkpoint", "2");
+        telemetry.update();
+
 
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
