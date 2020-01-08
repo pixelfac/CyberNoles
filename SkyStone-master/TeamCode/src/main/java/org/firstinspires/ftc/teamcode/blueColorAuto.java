@@ -75,7 +75,7 @@ public class blueColorAuto extends LinearOpMode {
         motorBackRight.setPower(0);
     }
 
-    public void moveUntil(int property, String comparison, int value){
+    public void moveUntil(String direction, int property, String comparison, int value){
         /*
             example properties:
                 ColorSensor.alpha(),
