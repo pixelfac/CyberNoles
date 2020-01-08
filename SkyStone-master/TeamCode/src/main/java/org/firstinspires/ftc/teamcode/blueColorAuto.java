@@ -47,10 +47,14 @@ public class blueColorAuto extends LinearOpMode {
     }
 
     public void move(String direction, int ticks){
+        telemetry.addData("checkpoint", "1.5");
+        telemetry.update();
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        telemetry.addData("checkpoint", "2");
+        telemetry.update();
         if (!direction.equals("none")) {
             int d = 0;
             if (direction.equals("forward"))
@@ -61,42 +65,47 @@ public class blueColorAuto extends LinearOpMode {
                 d = 2;
             else if (direction.equals("right"))
                 d = 3;
-            motorFrontLeft.setTargetPosition((int)(directions[d][0] * (ticks + motorFrontLeft.getCurrentPosition())));
-            motorFrontRight.setTargetPosition((int)(directions[d][1] * (ticks + motorFrontRight.getCurrentPosition())));
-            motorBackLeft.setTargetPosition((int)(directions[d][2] * (ticks + motorBackLeft.getCurrentPosition())));
-            motorBackRight.setTargetPosition((int)(directions[d][3] * (ticks + motorBackRight.getCurrentPosition())));
+            motorFrontLeft.setTargetPosition((int)(directions[d][0] * ticks + motorFrontLeft.getCurrentPosition()));
+            motorFrontRight.setTargetPosition((int)(directions[d][1] * ticks + motorFrontRight.getCurrentPosition()));
+            motorBackLeft.setTargetPosition((int)(directions[d][2] * ticks + motorBackLeft.getCurrentPosition()));
+            motorBackRight.setTargetPosition((int)(directions[d][3] * ticks + motorBackRight.getCurrentPosition()));
         }
+        telemetry.addData("checkpoint", "3");
+        telemetry.update();
         //double debounce = runtime.seconds() + 0.0;
         //while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
-        while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
-            telemetry.addData("Hue", "h");
-        }
+        //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
+            //telemetry.addData("Hue", "h");
+        //}
 
         motorFrontLeft.setPower(1);
         motorFrontRight.setPower(1);
         motorBackLeft.setPower(1);
         motorBackRight.setPower(1);
-
+        telemetry.addData("checkpoint", "4");
+        telemetry.update();
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        telemetry.addData("checkpoint", "5");
+        telemetry.update();
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
         motorBackRight.setPower(0);
-
+        telemetry.addData("checkpoint", "6");
+        telemetry.update();
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        telemetry.addData("checkpoint", "7");
+        telemetry.update();
     }
 
     @Override
     public void runOpMode() {
-
         motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
@@ -142,7 +151,7 @@ public class blueColorAuto extends LinearOpMode {
         telemetry.addData("checkpoint", "1");
         telemetry.update();
         move("backward", 1120);
-        telemetry.addData("checkpoint", "2");
+        telemetry.addData("checkpoint", "10");
         telemetry.update();
 
 
