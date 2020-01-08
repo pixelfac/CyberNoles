@@ -46,15 +46,7 @@ public class blueColorAuto extends LinearOpMode {
         return false;
     }
 
-    public void move(String direction, int ticks){
-        telemetry.addData("checkpoint", "1.5");
-        telemetry.update();
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        telemetry.addData("checkpoint", "2");
-        telemetry.update();
+    public void move(String direction) {
         if (!direction.equals("none")) {
             int d = 0;
             if (direction.equals("forward"))
@@ -65,47 +57,51 @@ public class blueColorAuto extends LinearOpMode {
                 d = 2;
             else if (direction.equals("right"))
                 d = 3;
-            motorFrontLeft.setTargetPosition((int)(directions[d][0] * ticks + motorFrontLeft.getCurrentPosition()));
-            motorFrontRight.setTargetPosition((int)(directions[d][1] * ticks + motorFrontRight.getCurrentPosition()));
-            motorBackLeft.setTargetPosition((int)(directions[d][2] * ticks + motorBackLeft.getCurrentPosition()));
-            motorBackRight.setTargetPosition((int)(directions[d][3] * ticks + motorBackRight.getCurrentPosition()));
+            motorFrontLeft.setPower((directions[d][0]));
+            motorFrontRight.setPower((directions[d][1]));
+            motorBackLeft.setPower((directions[d][2]));
+            motorBackRight.setPower((directions[d][3]));
         }
-        telemetry.addData("checkpoint", "3");
-        telemetry.update();
-        //double debounce = runtime.seconds() + 0.0;
-        //while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
+    }
+
+    public void moveUntilTime(String direction, int time){
+        /*motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        move(direction);
+        double debounce = runtime.seconds() + 0.0;
+        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
         //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
-            //telemetry.addData("Hue", "h");
+        //    telemetry.addData("Hue", "h");
         //}
 
-        motorFrontLeft.setPower(1);
-        motorFrontRight.setPower(1);
-        motorBackLeft.setPower(1);
-        motorBackRight.setPower(1);
-        telemetry.addData("checkpoint", "4");
-        telemetry.update();
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        telemetry.addData("checkpoint", "5");
-        telemetry.update();
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
         motorBackRight.setPower(0);
-        telemetry.addData("checkpoint", "6");
-        telemetry.update();
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        telemetry.addData("checkpoint", "7");
-        telemetry.update();
+    }
+
+    public void moveUntilColor(String direction, int time){
+        /*motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        double debounce = runtime.seconds() + 0.0;
+        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
+        //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
+        //    telemetry.addData("Hue", "h");
+        //}
+
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
     }
 
     @Override
     public void runOpMode() {
+
         motorFrontLeft = hardwareMap.get(DcMotor.class, "leftFrontDrive");
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
@@ -134,26 +130,13 @@ public class blueColorAuto extends LinearOpMode {
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
 
-        // wait for the start button to be pressed.
-        waitForStart();
-
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-        telemetry.addData("checkpoint", "1");
-        telemetry.update();
-        move("backward", 1120);
-        telemetry.addData("checkpoint", "10");
-        telemetry.update();
-
+        // wait for the start button to be pressed.
+        waitForStart();
+        move("backward", 5000);
 
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
@@ -165,7 +148,6 @@ public class blueColorAuto extends LinearOpMode {
                     (int) (sensorColor.green() * SCALE_FACTOR),
                     (int) (sensorColor.blue() * SCALE_FACTOR),
                     hsvValues);
-
             // send the info back to driver station using telemetry function.
             telemetry.addData("Distance (cm)",
                     String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
@@ -174,7 +156,6 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
-
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument
             // to the HSVToColor method.
@@ -183,12 +164,10 @@ public class blueColorAuto extends LinearOpMode {
                     relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
                 }
             });
-
             telemetry.update();
         } */
 
         /*boolean is_5;
-
         while (opModeIsActive()) {
             if(sensorDistance.getDistance(DistanceUnit.CM) > 9 && sensorDistance.getDistance(DistanceUnit.CM) < 11)
                 is_5 = true;
@@ -198,7 +177,6 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.addData("if 5", is_5);
             telemetry.addData("distance", sensorDistance.getDistance(DistanceUnit.CM));
             telemetry.update();
-
             //move close enough to the stones for sensor to work
             move("backward", 1000);
             //scan the block
@@ -208,7 +186,6 @@ public class blueColorAuto extends LinearOpMode {
        else {
                 //scan again
             }
-
             //park underneath skybridge
             move("strafe left", 19);
         */
