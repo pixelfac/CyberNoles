@@ -65,16 +65,9 @@ public class blueColorAuto extends LinearOpMode {
     }
 
     public void moveUntilTime(String direction, int time){
-        /*motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
         move(direction);
         double debounce = runtime.seconds() + 0.0;
         while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
-        //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
-        //    telemetry.addData("Hue", "h");
-        //}
 
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
@@ -82,16 +75,20 @@ public class blueColorAuto extends LinearOpMode {
         motorBackRight.setPower(0);
     }
 
-    public void moveUntilColor(String direction, int time){
-        /*motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
-        double debounce = runtime.seconds() + 0.0;
-        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
-        //while (!close(motorFrontLeft.getCurrentPosition(), motorFrontLeft.getTargetPosition()) || close(motorFrontRight.getCurrentPosition(), motorFrontRight.getTargetPosition()) || close(motorBackLeft.getCurrentPosition(), motorBackLeft.getTargetPosition()) || close(motorBackRight.getCurrentPosition(), motorBackRight.getTargetPosition())) {
-        //    telemetry.addData("Hue", "h");
-        //}
+    public void moveUntil(int property, String comparison, int value){
+        /*
+            example properties:
+                ColorSensor.alpha(),
+                ColorSensor.red(),
+                ColorSensor.green(),
+                ColorSensor.blue(),
+                sensorDistance.getDistance(DistanceUnit.CM)
+            comparisons:
+                lessthan,
+                greaterthan
+         */
+        move(direction);
+        while (((comparison.equals("lessthan") && property >= value) || (comparison.equals("greaterthan") && property <= value)) && opModeIsActive()) {}
 
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);

@@ -15,6 +15,7 @@
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Android_Accelerated_x86_Oreo" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
@@ -33,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/SkyStone-master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Comp3S2.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4335">
-              <caret line="263" column="18" selection-start-line="263" selection-start-column="18" selection-end-line="263" selection-end-column="53" />
+              <caret line="263" column="18" selection-start-line="263" selection-start-column="18" selection-end-line="263" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -41,8 +42,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SkyStone-master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/blueColorAuto.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="89" column="50" selection-start-line="89" selection-start-column="50" selection-end-line="89" selection-end-column="50" />
+            <state relative-caret-position="355">
+              <caret line="87" column="27" selection-start-line="87" selection-start-column="27" selection-end-line="87" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,6 +69,7 @@
       <find>blockgrab</find>
       <find>dragger</find>
       <find>sensor</find>
+      <find>distanceunit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -93,7 +98,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -201,6 +205,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -330,7 +335,7 @@
     <entry file="file://$PROJECT_DIR$/SkyStone-master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Comp3S2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4335">
-          <caret line="263" column="18" selection-start-line="263" selection-start-column="18" selection-end-line="263" selection-end-column="53" />
+          <caret line="263" column="18" selection-start-line="263" selection-start-column="18" selection-end-line="263" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -343,8 +348,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SkyStone-master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/blueColorAuto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="89" column="50" selection-start-line="89" selection-start-column="50" selection-end-line="89" selection-end-column="50" />
+        <state relative-caret-position="355">
+          <caret line="87" column="27" selection-start-line="87" selection-start-column="27" selection-end-line="87" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
