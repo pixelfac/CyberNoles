@@ -61,10 +61,10 @@ public class blueColorAuto extends LinearOpMode {
                 d = 2;
             else if (direction.equals("right"))
                 d = 3;
-            motorFrontLeft.setTargetPosition((int)(directions[d][0] * ticks));
-            motorFrontRight.setTargetPosition((int)(directions[d][1] * ticks));
-            motorBackLeft.setTargetPosition((int)(directions[d][2] * ticks));
-            motorBackRight.setTargetPosition((int)(directions[d][3] * ticks));
+            motorFrontLeft.setTargetPosition((int)(directions[d][0] * (ticks + motorFrontLeft.getCurrentPosition())));
+            motorFrontRight.setTargetPosition((int)(directions[d][1] * (ticks + motorFrontRight.getCurrentPosition())));
+            motorBackLeft.setTargetPosition((int)(directions[d][2] * (ticks + motorBackLeft.getCurrentPosition())));
+            motorBackRight.setTargetPosition((int)(directions[d][3] * (ticks + motorBackRight.getCurrentPosition())));
         }
         //double debounce = runtime.seconds() + 0.0;
         //while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
@@ -72,10 +72,26 @@ public class blueColorAuto extends LinearOpMode {
             telemetry.addData("Hue", "h");
         }
 
+        motorFrontLeft.setPower(1);
+        motorFrontRight.setPower(1);
+        motorBackLeft.setPower(1);
+        motorBackRight.setPower(1);
+
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
     @Override
@@ -111,6 +127,12 @@ public class blueColorAuto extends LinearOpMode {
 
         // wait for the start button to be pressed.
         waitForStart();
+
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
