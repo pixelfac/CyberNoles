@@ -31,7 +31,7 @@ public class blueColorAuto extends LinearOpMode {
     private DcMotor motorFrontRight;
     private DcMotor motorBackLeft;
     private DcMotor motorBackRight;
-    private CRServo dragger;
+    private Servo dragger;
 
 
     double[][] directions = {
@@ -104,7 +104,7 @@ public class blueColorAuto extends LinearOpMode {
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
 
-        dragger = hardwareMap.get(CRServo.class, "dragger");
+        dragger = hardwareMap.get(Servo.class, "dragger");
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
@@ -133,7 +133,12 @@ public class blueColorAuto extends LinearOpMode {
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // wait for the start button to be pressed.
         waitForStart();
-        move("backward", 5000);
+        dragger.setPosition(1);
+        sleep(100);
+        moveUntilTime("forward", 1000);
+
+
+
 
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
@@ -186,5 +191,6 @@ public class blueColorAuto extends LinearOpMode {
             //park underneath skybridge
             move("strafe left", 19);
         */
+        idle();
     }
 }

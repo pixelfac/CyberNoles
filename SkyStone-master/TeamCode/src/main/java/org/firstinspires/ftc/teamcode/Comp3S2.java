@@ -41,7 +41,7 @@ public class Comp3S2 extends LinearOpMode {
     private CRServo blockGrab;
     private DcMotor blockLift;
 
-    private CRServo dragger;
+    private Servo dragger;
 
 
 
@@ -62,7 +62,7 @@ public class Comp3S2 extends LinearOpMode {
 
         blockGrab = hardwareMap.get(CRServo.class, "blockGrab");
         blockLift = hardwareMap.get(DcMotor.class, "blockLift");
-        dragger = hardwareMap.get(CRServo.class, "dragger");
+        dragger = hardwareMap.get(Servo.class, "dragger");
 
         blockLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -261,35 +261,18 @@ public class Comp3S2 extends LinearOpMode {
             else {
                 blockGrab.setPower(0);
             }
-            /*if (debounce + 0.1 <= runtime.seconds()) {
-                if (gamepad1.dpad_right && draggerPos < maxDragger)
-                    draggerPos += 0.05;
-                else if (gamepad1.dpad_left && draggerPos > minDragger)
-                    draggerPos -= 0.05;
-                if (draggerPos > maxDragger)
-                    draggerPos = maxDragger;
-                else if (draggerPos < minDragger)
-                    draggerPos = minDragger;
-                debounce = runtime.seconds() + 0.0;
-                //dragger.setPosition(draggerPos);
-            }*/
+
+
+            //dragger commands
             if (gamepad1.dpad_up) {
-               draggerPos = minDragger;
-               dragger.setPower(0.6);
+               dragger.setPosition(1);
+               sleep(100);
             } else
             if (gamepad1.dpad_down) {
-                draggerPos = maxDragger;
-                dragger.setPower(-0.6);
+                dragger.setPosition(0);
+                sleep(100);
             }
-            else if (!(gamepad1.dpad_up ||gamepad1.dpad_down))
-            {
-                dragger.setPower(0);
-            }
-            telemetry.addData(">", "draggerpos: " + draggerPos);
 
-
-
-            //need to program functionality for dragger
 
             telemetry.update();
             /* Prevents the controller from being dead inside */
