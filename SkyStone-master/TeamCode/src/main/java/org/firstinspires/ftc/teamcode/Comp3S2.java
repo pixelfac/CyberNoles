@@ -155,10 +155,10 @@ public class Comp3S2 extends LinearOpMode {
                  * For example, pushing the joystick halfway up will
                  * only using the instructions for "up" at a half amount,
                  * resulting in the robot moving forward at half speed.*/
-                FLpower += (directions[dir1][0] * totalPower * abs(leftStickX)) + (directions[dir2][0] * totalPower * abs(leftStickY));
-                FRpower += (directions[dir1][1] * totalPower * abs(leftStickX)) + (directions[dir2][1] * totalPower * abs(leftStickY));
-                BLpower += (directions[dir1][2] * totalPower * abs(leftStickX)) + (directions[dir2][2] * totalPower * abs(leftStickY));
-                BRpower += (directions[dir1][3] * totalPower * abs(leftStickX)) + (directions[dir2][3] * totalPower * abs(leftStickY));
+                FLpower += (directions[dir1][0] * abs(leftStickX)) + (directions[dir2][0] * abs(leftStickY));
+                FRpower += (directions[dir1][1] * abs(leftStickX)) + (directions[dir2][1] * abs(leftStickY));
+                BLpower += (directions[dir1][2] * abs(leftStickX)) + (directions[dir2][2] * abs(leftStickY));
+                BRpower += (directions[dir1][3] * abs(leftStickX)) + (directions[dir2][3] * abs(leftStickY));
             }
 
             if (abs(rightStickX) > 0.05) {
