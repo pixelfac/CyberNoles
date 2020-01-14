@@ -20,9 +20,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
 
-@Autonomous(name = "Auto_BlueColor", group = "Linear OpMode")
+@Autonomous(name = "Auto_RedColor", group = "Linear OpMode")
 //@Disabled                            // Comment this out to add to the opmode list
-public class blueColorAuto extends LinearOpMode {
+public class redColorAuto extends LinearOpMode {
 
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
@@ -161,11 +161,11 @@ public class blueColorAuto extends LinearOpMode {
         sleep(1000);
         moveUntilTime("forward", 400);
         sleep(1000);
-        moveUntilTime("right", 2500);
+        moveUntilTime("left", 2500);
         sleep(1000);
         dragger.setPosition(0);
         sleep(1000);
-        moveUntilTime("left", 3400);    //set time to 1000 and stop after for 1 block and park
+        moveUntilTime("right", 3400);    //set time to 1000 and stop after for 1 block and park
         sleep(1000);
         moveUntilTime("backward", 350);
         sleep(1000);
@@ -173,15 +173,15 @@ public class blueColorAuto extends LinearOpMode {
         sleep(1000);
         moveUntilTime("forward", 450);
         sleep(1000);
-        moveUntilTime("right", 2000);
+        moveUntilTime("left", 2000);
         sleep(1000);
         moveUntilTime("forward", 200);
         sleep(1000);
-        moveUntilTime("right ", 1200);
+        moveUntilTime("left", 1200);
         sleep(1000);
         dragger.setPosition(0);
         sleep(1000);
-        moveUntilTime("left", 600);    //set time to 600 and stop after for 2 blocks and park
+        moveUntilTime("right", 600);    //set time to 600 and stop after for 2 blocks and park
         sleep(1000);
 
 

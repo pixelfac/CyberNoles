@@ -81,11 +81,8 @@ public class Comp3S2 extends LinearOpMode {
         extendWheelLeft.setPower(0);
         extendWheelRight.setPower(0);
 
-        double draggerPos = 0.0;
-        double maxDragger = .8;
-        double minDragger = 0.70;
-        double debounce = runtime.seconds() + 0.0;
 
+        //classic
         telemetry.addData(">", "Press Start To Run TeleOp");
         telemetry.update();
 
@@ -155,10 +152,10 @@ public class Comp3S2 extends LinearOpMode {
                  * For example, pushing the joystick halfway up will
                  * only using the instructions for "up" at a half amount,
                  * resulting in the robot moving forward at half speed.*/
-                FLpower += (directions[dir1][0] * abs(leftStickX)) + (directions[dir2][0] * abs(leftStickY));
-                FRpower += (directions[dir1][1] * abs(leftStickX)) + (directions[dir2][1] * abs(leftStickY));
-                BLpower += (directions[dir1][2] * abs(leftStickX)) + (directions[dir2][2] * abs(leftStickY));
-                BRpower += (directions[dir1][3] * abs(leftStickX)) + (directions[dir2][3] * abs(leftStickY));
+                FLpower += (directions[dir1][0] * totalPower * abs(leftStickX)) + (directions[dir2][0] * totalPower * abs(leftStickY));
+                FRpower += (directions[dir1][1] * totalPower * abs(leftStickX)) + (directions[dir2][1] * totalPower * abs(leftStickY));
+                BLpower += (directions[dir1][2] * totalPower * abs(leftStickX)) + (directions[dir2][2] * totalPower * abs(leftStickY));
+                BRpower += (directions[dir1][3] * totalPower * abs(leftStickX)) + (directions[dir2][3] * totalPower * abs(leftStickY));
             }
 
             if (abs(rightStickX) > 0.05) {
@@ -207,6 +204,7 @@ public class Comp3S2 extends LinearOpMode {
                 rotateWheelRight.setPower(0);
             }
 
+
             //Left stick extends/retracts left flywheel
             if (abs(gamepad2.left_stick_y) > 0.05f) {
                 extendWheelLeft.setPower(gamepad2.left_stick_y);
@@ -214,6 +212,7 @@ public class Comp3S2 extends LinearOpMode {
             else {
                 extendWheelLeft.setPower(0);
             }
+
 
             //Right stick extends/retracts right flywheel
             if (abs(gamepad2.right_stick_y) > 0.05f) {
@@ -223,32 +222,22 @@ public class Comp3S2 extends LinearOpMode {
                 extendWheelRight.setPower(0);
             }
 
+
             //block lifter arm
             //a lifts, b lowers, defaults at brake
             if (gamepad2.a)
             {
-                //reverts to normal functionality
-                //blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                //turns on
                 blockLift.setPower(0.5);
             }
             else if (gamepad2.b)
             {
-                //reverts to normal functionality
-                //blockLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                //turns on
                 blockLift.setPower(-0.5);
             }
             else
             {
-                //turns on encorder functionality
-                //blockLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                //sets current position as target
-                //blockLift.setTargetPosition(0);
-                //tries to stay at current position
-                //blockLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 blockLift.setPower(0.0);
             }
+
 
             //block grabbing mechanism
             //x closes, y opens
