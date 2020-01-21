@@ -1,26 +1,26 @@
- package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode;
 
-        import android.app.Activity;
-        import android.graphics.Color;
-        import android.view.View;
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.hardware.ColorSensor;
-        import com.qualcomm.robotcore.hardware.DistanceSensor;
-        import com.qualcomm.robotcore.util.ElapsedTime;
-        import com.qualcomm.robotcore.hardware.CRServo;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.DcMotorSimple;
-        import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
-        import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-        import java.util.Locale;
+import java.util.Locale;
 
-@Autonomous(name = "blueBuildingAuto", group = "Linear OpMode")
+@Autonomous(name = "Auto_BlueColorSimple", group = "Linear OpMode")
 //@Disabled                            // Comment this out to add to the opmode list
 public class blueColorAutoSimple extends LinearOpMode {
 
@@ -33,35 +33,73 @@ public class blueColorAutoSimple extends LinearOpMode {
     private DcMotor motorBackRight;
     private Servo dragger;
 
+
     double[][] directions = {
-            {0.7, -0.7, 0.7, -0.7},   /* up     */
-            {-0.7, 0.7, -0.7, 0.7},   /* down     */
-            {-0.7, -0.7, 0.7, 0.7},   /* left     */
-            {0.7, 0.7, -0.7, -0.7},   /* right     */
+            {1, -1, 1, -1},   /* up     */
+            {-1, 1, -1, 1},   /* down     */
+            {-1, -1, 1, 1},   /* left     */
+            {1, 1, -1, -1},   /* right     */
     };
 
-    public void move(String direction, long time){
+    public boolean close(int currentPos, int targetPos) {
+        if (Math.abs(currentPos - targetPos) < 3) return true;
+        return false;
+    }
+
+    public void move(String direction) {
         if (!direction.equals("none")) {
             int d = 0;
             if (direction.equals("forward"))
                 d = 0;
-            else if (direction.equals("down"))
+            else if (direction.equals("backward"))
                 d = 1;
             else if (direction.equals("left"))
                 d = 2;
             else if (direction.equals("right"))
                 d = 3;
-            motorFrontLeft.setPower(directions[d][0]);
-            motorFrontRight.setPower(directions[d][1]);
-            motorBackLeft.setPower(directions[d][2]);
-            motorBackRight.setPower(directions[d][3]);
-        } else {
-            motorFrontLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorBackLeft.setPower(0);
-            motorBackRight.setPower(0);
+            motorFrontLeft.setPower((directions[d][0]));
+            motorFrontRight.setPower((directions[d][1]));
+            motorBackLeft.setPower((directions[d][2]));
+            motorBackRight.setPower((directions[d][3]));
         }
-        sleep(time);
+    }
+
+    public void moveUntilTime(String direction, int time){
+        move(direction);
+        double debounce = runtime.seconds() + 0.0;
+        while (debounce + (time / 1000.0) > runtime.seconds() && opModeIsActive()) {}
+
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+    }
+
+    public void moveUntil(String direction, int property, String comparison, int value){
+        move(direction);
+        while (((comparison.equals("lessthan") && property >= value) || (comparison.equals("greaterthan") && property <= value)) && opModeIsActive()) {}
+
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+    }
+
+    public void moveUntil(String direction, double property, String comparison, double value){
+        /*
+            example properties:
+                ColorSensor.alpha(),
+                ColorSensor.red(),
+                ColorSensor.green(),
+                ColorSensor.blue(),
+                sensorDistance.getDistance(DistanceUnit.CM)
+            comparisons:
+                lessthan,
+                greaterthan
+         */
+        move(direction);
+        while (((comparison.equals("lessthan") && property >= value) || (comparison.equals("greaterthan") && property <= value)) && opModeIsActive()) {}
+
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
@@ -75,8 +113,8 @@ public class blueColorAutoSimple extends LinearOpMode {
         motorFrontRight = hardwareMap.get(DcMotor.class, "rightFrontDrive");
         motorBackLeft = hardwareMap.get(DcMotor.class, "leftBackDrive");
         motorBackRight = hardwareMap.get(DcMotor.class, "rightBackDrive");
+
         dragger = hardwareMap.get(Servo.class, "dragger");
-        dragger.setPosition(0.75);
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
@@ -94,99 +132,111 @@ public class blueColorAutoSimple extends LinearOpMode {
         // to amplify/attentuate the measured values.
         final double SCALE_FACTOR = 255;
 
+        int step = 0;
         // get a reference to the RelativeLayout so we can change the background
         // color of the Robot Controller app to match the hue detected by the RGB sensor.
         int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+        telemetry.addData("Status: ", "Initialized");
+        telemetry.addData(">", "Press Play to start op mode");
+        telemetry.update();
 
         // wait for the start button to be pressed.
         waitForStart();
 
-        // loop and read the RGB and distance data.
-        // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
-        /*while (opModeIsActive()) {
-            // convert the RGB values to HSV values.
-            // multiply by the SCALE_FACTOR.
-            // then cast it back to int (SCALE_FACTOR is a double)
+        while (opModeIsActive()) {
             Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
                     (int) (sensorColor.green() * SCALE_FACTOR),
                     (int) (sensorColor.blue() * SCALE_FACTOR),
                     hsvValues);
-            // send the info back to driver station using telemetry function.
-            telemetry.addData("Distance (cm)",
-                    String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.addData("Alpha", sensorColor.alpha());
-            telemetry.addData("Red  ", sensorColor.red());
-            telemetry.addData("Green", sensorColor.green());
-            telemetry.addData("Blue ", sensorColor.blue());
+            Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                    (int) (sensorColor.green() * SCALE_FACTOR),
+                    (int) (sensorColor.blue() * SCALE_FACTOR),
+                    hsvValues);
+
+            // Send the info back to driver station using telemetry function.
+            telemetry.addData("Step: ", step);
             telemetry.addData("Hue", hsvValues[0]);
-            // change the background color to match the color detected by the RGB sensor.
-            // pass a reference to the hue, saturation, and value array as an argument
-            // to the HSVToColor method.
-            relativeLayout.post(new Runnable() {
-                public void run() {
-                    relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
-                }
-            });
             telemetry.update();
-        } */
 
+            if (step == 0) {
+                motorFrontLeft.setPower(0.2);
+                motorFrontRight.setPower(-0.2);
+                motorBackLeft.setPower(0.2);
+                motorBackRight.setPower(-0.2);
+            }
+            while (step == 0 && opModeIsActive()){
+                Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                        (int) (sensorColor.green() * SCALE_FACTOR),
+                        (int) (sensorColor.blue() * SCALE_FACTOR),
+                        hsvValues);
+                Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                        (int) (sensorColor.green() * SCALE_FACTOR),
+                        (int) (sensorColor.blue() * SCALE_FACTOR),
+                        hsvValues);
 
-        move("left", 1800);
-
-        int loopNum = 0;
-        try {
-            while (Double.isNaN(sensorDistance.getDistance(DistanceUnit.CM)) || sensorDistance.getDistance(DistanceUnit.CM) > 10) {
-                telemetry.addData("Looping", loopNum);
+                // Send the info back to driver station using telemetry function.
+                telemetry.addData("Step: ", step);
+                telemetry.addData("Hue", hsvValues[0]);
                 telemetry.update();
-                loopNum++;
+                if (hsvValues[0] > 150 ){ // Checks if it is red or blue
+                    step++;
+                }
             }
-        }
-        catch(Exception e){
-            telemetry.addData("This is ur error", e.toString());
-            telemetry.update();
-
-            sleep(5000);
-        }
-
-        sleep(300);
-        dragger.setPosition(0.25);
-        sleep(1000);
-        move("down",100);
-        sleep(300);
-        move("right", 850);
-        move("forward",2000);
-        sleep(300);
-        dragger.setPosition(0.75);
-        sleep(300);
-
-
-
-        move("down", 2200);
-        move("left", 900);
-        sleep(300);
-        dragger.setPosition(0.25);
-        sleep(300);
-        move("down",100);
-        sleep(300);
-        move("right", 900);
-        move("forward", 2000);
-        sleep(300);
-        dragger.setPosition(0.75);
-        sleep(300);
-
-        move("down", 700);
-
-
-
-
-        // Set the panel back to the default color
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                relativeLayout.setBackgroundColor(Color.WHITE);
-
-
+            if (step == 1){
+                motorFrontRight.setPower(0);
+                motorFrontLeft.setPower(0);
+                motorBackLeft.setPower(0);
+                motorBackRight.setPower(0);
+                step++;
             }
-        });
+
+           /* if (step == 2){
+                motorFrontRight.setPower(-.5);
+                motorFrontLeft.setPower(.5);
+                motorBackLeft.setPower(.5);
+                motorBackRight.setPower(-.5);
+                sleep(200);
+                step++;
+            }
+
+            if (step == 3){
+                motorFrontRight.setPower(0);
+                motorFrontLeft.setPower(0);
+                motorBackLeft.setPower(0);
+                motorBackRight.setPower(0);
+            } */
+
+            /*moveUntilTime("backward", 800);
+            sleep(500);
+            dragger.setPosition(1);
+            sleep(1000);
+            moveUntilTime("forward", 400);
+            sleep(1000);
+            moveUntilTime("right", 2500);
+            sleep(1000);
+            dragger.setPosition(0);
+            sleep(1000);
+            moveUntilTime("left", 3400);    //set time to 1000 and stop after for 1 block and park
+            sleep(1000);
+            moveUntilTime("backward", 350);
+            sleep(1000);
+            dragger.setPosition(1);
+            sleep(1000);
+            moveUntilTime("forward", 450);
+            sleep(1000);
+            moveUntilTime("right", 2000);
+            sleep(1000);
+            moveUntilTime("forward", 200);
+            sleep(1000);
+            moveUntilTime("right ", 1200);
+            sleep(1000);
+            dragger.setPosition(0);
+            sleep(1000);
+            moveUntilTime("left", 600);    //set time to 600 and stop after for 2 blocks and park
+            sleep(1000);
+*/
+            idle();
+        }
     }
 }

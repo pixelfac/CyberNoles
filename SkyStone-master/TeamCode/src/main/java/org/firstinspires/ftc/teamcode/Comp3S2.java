@@ -225,11 +225,11 @@ public class Comp3S2 extends LinearOpMode {
 
             //block lifter arm
             //a lifts, b lowers, defaults at brake
-            if (gamepad2.a)
+            if (gamepad2.left_bumper)
             {
                 blockLift.setPower(0.5);
             }
-            else if (gamepad2.b)
+            else if (gamepad2.right_bumper)
             {
                 blockLift.setPower(-0.5);
             }
@@ -242,10 +242,10 @@ public class Comp3S2 extends LinearOpMode {
             //block grabbing mechanism
             //x closes, y opens
             if (gamepad2.x) {
-                blockGrab.setPower(1);
+                blockGrab.setPower(-1);
             }
             else if (gamepad2.y) {
-                blockGrab.setPower(-1);
+                blockGrab.setPower(1);
             }
             else {
                 blockGrab.setPower(0);
