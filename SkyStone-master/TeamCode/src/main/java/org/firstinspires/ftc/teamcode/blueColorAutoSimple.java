@@ -179,7 +179,8 @@ public class blueColorAutoSimple extends LinearOpMode {
                 telemetry.addData("Step: ", step);
                 telemetry.addData("Hue", hsvValues[0]);
                 telemetry.update();
-                if (hsvValues[0] > 150 ){ // Checks if it is red or blue
+                //if (hsvValues[0] > 150 ){ // Checks if it is red or blue
+                if(sensorDistance.getDistance(DistanceUnit.CM) < 10)  {
                     step++;
                 }
             }
