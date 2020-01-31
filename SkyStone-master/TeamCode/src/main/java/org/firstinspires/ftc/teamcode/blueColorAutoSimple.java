@@ -125,6 +125,14 @@ public class blueColorAutoSimple extends LinearOpMode {
         motorBackRight.setPower(0);
     }
 
+    public double average(double[] array) {
+        double total = 0.0;
+        for (int i = 0; i < array.length; i++) {
+            total += array[i];
+        }
+        return (total / array.length);
+    }
+
     @Override
     public void runOpMode() {
 
@@ -187,23 +195,20 @@ public class blueColorAutoSimple extends LinearOpMode {
         extendWheelLeft.setPower(0.0);
 
         move("forward", 0.2);
-        /*while ((sensorDistance.getDistance(DistanceUnit.CM)) <= 5.0 && opModeIsActive()) {
-            telemetry.addData("distance", (sensorDistance.getDistance(DistanceUnit.CM)));
+        double[] distances = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        int distanceIndex = 0;
+        boolean cycled = false;
+        while ((average(distances) <= 25.0 || !cycled) && opModeIsActive()) {
+            distances[distanceIndex] = sensorDistance.getDistance(DistanceUnit.CM);
+            distanceIndex++;
+            if (distanceIndex == distances.length) {
+                distanceIndex = 0;
+                cycled = true;
+            }
+            telemetry.addData("distance", average(distances));
             telemetry.update();
         }
-        while ((sensorDistance.getDistance(DistanceUnit.CM)) <= 5.0 && opModeIsActive()) {
-            telemetry.addData("distance", (sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.update();
-        }
-        while ((sensorDistance.getDistance(DistanceUnit.CM)) <= 5.0 && opModeIsActive()) {
-            telemetry.addData("distance", (sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.update();
-        }
-        while ((sensorDistance.getDistance(DistanceUnit.CM)) <= 5.0 && opModeIsActive()) {
-            telemetry.addData("distance", (sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.update();
-        }*/
-        coolWait(2);
+        //coolWait(2);
         unmove();
         move("right", 0.2);
         telemetry.addData("Alpha", sensorColor.alpha());
