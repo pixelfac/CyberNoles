@@ -43,6 +43,8 @@ public class blueLoadingCompliment extends LinearOpMode {
             {-1, 1, -1, 1},   /* down     */
             {-1, -1, 1, 1},   /* left     */
             {1, 1, -1, -1},   /* right     */
+            {1, 1, 1, 1},   /* clockwise  */
+            {-1, -1, -1, -1},   /* counterclockwise  */
     };
 
     public boolean close(int currentPos, int targetPos) {
@@ -61,6 +63,10 @@ public class blueLoadingCompliment extends LinearOpMode {
                 d = 2;
             else if (direction.equals("right"))
                 d = 3;
+            else if (direction.equals("clockwise"))
+                d = 4;
+            else if (direction.equals("counterclockwise"))
+                d = 5;
             motorFrontLeft.setPower((directions[d][0]) * power);
             motorFrontRight.setPower((directions[d][1]) * power);
             motorBackLeft.setPower((directions[d][2]) * power);
