@@ -20,9 +20,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
 
-@Autonomous(name = "Auto_BlueLoadComp", group = "Linear OpMode")
+@Autonomous(name = "Auto_RedLoadComp", group = "Linear OpMode")
 //@Disabled                            // Comment this out to add to the opmode list
-public class blueLoadingCompliment extends LinearOpMode {
+public class redLoadingCompliment extends LinearOpMode {
 
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
@@ -179,12 +179,12 @@ public class blueLoadingCompliment extends LinearOpMode {
         sleep(1000);
         moveUntilTime("forward", 400, 0.8);
         sleep(1000);
-        moveUntilTime("right", 2500, 0.8);
+        moveUntilTime("left", 2500, 0.8);
         sleep(1000);
         dragger.setPosition(0);
         sleep(1000);
-        moveUntilTime("left", 1000, 0.6);
+        moveUntilTime("right", 1000, 0.6);
 
-            idle();
+        idle();
     }
 }
