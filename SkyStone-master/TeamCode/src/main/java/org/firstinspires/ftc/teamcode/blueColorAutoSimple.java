@@ -198,7 +198,7 @@ public class blueColorAutoSimple extends LinearOpMode {
         double[] distances = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         int distanceIndex = 0;
         boolean cycled = false;
-        while ((!cycled || average(distances) <= 25.0) && opModeIsActive()) {
+        while ((!cycled || average(distances) <= 8.0) && opModeIsActive()) {
             distances[distanceIndex] = sensorDistance.getDistance(DistanceUnit.CM);
             distanceIndex++;
             if (distanceIndex == distances.length) {
