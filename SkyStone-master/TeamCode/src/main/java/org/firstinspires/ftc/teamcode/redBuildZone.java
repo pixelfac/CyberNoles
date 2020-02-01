@@ -176,35 +176,39 @@ public class redBuildZone extends LinearOpMode {
 
 
 
-
-
-        coolWait(10);
+        moveUntilTime("forward",1500,.8);
+        coolWait(.5);
+        moveUntilTime("counterclockwise", 1000, .5);
+        coolWait(.5);
+        moveUntilTime("forward",1700,.8);
+        coolWait(.5);
+        moveUntilTime("counterclockwise", 990, .5);
+        coolWait(3);
         extendWheelLeft.setPower(0.5);
         coolWait(4);
         extendWheelLeft.setPower(0.0);
-        moveUntilTime("left", 3800, 0.8);
-        moveUntilTime("forward", 700, 0.8);
-        //sleep(500);
-        blockGrab.setPower(1.0);
-        coolWait(1.5);
-        blockLift.setPower(-0.5);
+        moveUntilTime("forward", 200, 0.8);
         coolWait(1);
+        blockGrab.setPower(1.0);
+        coolWait(1);
+        blockLift.setPower(-0.5);
+        coolWait(.5);
         blockLift.setPower(0.0);
-        //sleep(1000);
-        moveUntilTime("backward", 400, 0.8);
-        //sleep(1000);
-        moveUntilTime("right", 4700, 0.8);
-        moveUntilTime("forward", 400, .8);
-        //sleep(1000);
-        blockLift.setPower(0.5);
-        coolWait(.3);
-        blockLift.setPower(0.0);
-        blockGrab.setPower(-1.0);
-        coolWait(2.5);
-        //sleep(1000);
-        moveUntilTime("backward", 800, .8);
-        moveUntilTime("left", 2800, 0.6);
+        moveUntilTime("counterclockwise", 990, 0.5);
+        moveUntilTime("right", 500, .8);
+        moveUntilTime("forward", 600, .8);
 
+
+        /*
+
+        moveUntilTime("counterclockwise", 1000, 0.5);
+        coolWait(0.5);
+        moveUntilTime("forward",600,.8);
+        moveUntilTime("counterclockwise",1000, .5);
+        moveUntilTime("forward", 600, .8);
+
+
+         */
         idle();
     }
 }
