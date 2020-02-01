@@ -20,9 +20,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Locale;
 
-@Autonomous(name = "Auto_BlueLoadComp", group = "Linear OpMode")
+@Autonomous(name = "Auto_RedBuildComp", group = "Linear OpMode")
 //@Disabled                            // Comment this out to add to the opmode list
-public class blueLoadingCompliment extends LinearOpMode {
+public class redBuildZone extends LinearOpMode {
 
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
@@ -178,10 +178,11 @@ public class blueLoadingCompliment extends LinearOpMode {
 
 
 
-        //coolWait(15);
+        coolWait(10);
         extendWheelLeft.setPower(0.5);
-        coolWait(3);
+        coolWait(4);
         extendWheelLeft.setPower(0.0);
+        moveUntilTime("left", 3800, 0.8);
         moveUntilTime("forward", 700, 0.8);
         //sleep(500);
         blockGrab.setPower(1.0);
@@ -192,17 +193,17 @@ public class blueLoadingCompliment extends LinearOpMode {
         //sleep(1000);
         moveUntilTime("backward", 400, 0.8);
         //sleep(1000);
-        moveUntilTime("left", 4000, 0.8);
-        moveUntilTime("forward", 500, .8);
+        moveUntilTime("right", 4700, 0.8);
+        moveUntilTime("forward", 400, .8);
         //sleep(1000);
         blockLift.setPower(0.5);
-        coolWait(1);
+        coolWait(.3);
         blockLift.setPower(0.0);
         blockGrab.setPower(-1.0);
         coolWait(2.5);
         //sleep(1000);
-        moveUntilTime("backward", 600, .8);
-        moveUntilTime("right", 2000, 0.6);
+        moveUntilTime("backward", 800, .8);
+        moveUntilTime("left", 2800, 0.6);
 
         idle();
     }
